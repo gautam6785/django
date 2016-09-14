@@ -1,0 +1,15 @@
+<!-- range selector below main graph -->
+<div ng-cloak class="range_dropdown">
+	<div class="btn-group btn-group-flat btn-group-date">  
+		<a id="dashboard-range-dropdown" class="range_button dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+			{% verbatim %}{{datePickerService.range.label}}{% endverbatim %} <span class="caret"></span> &nbsp
+		</a>
+		<ul class="dropdown-menu">
+			<li ng-click="datePickerService.fetchDataAndSetHash(range);" ng-repeat="range in datePickerService.rangeLabels">
+				<a>{% verbatim %}{{range.label}}{% endverbatim %}</a>
+			</li>
+		</ul>
+	</div>
+	<input id="dashboard-date-selector" date-range-picker class="form-control date-picker" type="text" ng-model="datePickerService.date" max="datePickerService.staticToday" />
+
+</div>

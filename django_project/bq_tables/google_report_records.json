@@ -1,0 +1,146 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "customer_id",
+        "type": "INTEGER",
+        "description": "Customer ID"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "customer_account_id",
+        "type": "INTEGER",
+        "description": "Customer Account ID"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "order_number",
+        "type": "STRING",
+        "description": "Order Number"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "charged_date",
+        "type": "TIMESTAMP",
+        "description": "Human readable date in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "charged_time",
+        "type": "TIMESTAMP",
+        "description": "Human readable date in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "financial_status",
+        "type": "STRING",
+        "description": "Financial Status"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "device_model",
+        "type": "STRING",
+        "description": "Device Model"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "product_title",
+        "type": "STRING",
+        "description": "Product Title"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "product_id",
+        "type": "STRING",
+        "description": "Product Id"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "product_type",
+        "type": "STRING",
+        "description": "Product Type"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "sku_id",
+        "type": "STRING",
+        "description": "SKU ID"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "sale_currency",
+        "type": "STRING",
+        "description": "Currency of Sale"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "item_price",
+        "type": "FLOAT",
+        "description": "Item Price"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "taxes",
+        "type": "FLOAT",
+        "description": "Taxes Collected"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "charged_amount",
+        "type": "FLOAT",
+        "description": "Charged Amount"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "developer_proceeds",
+        "type": "FLOAT",
+        "description": "Developer Proceeds"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "developer_proceeds_usd",
+        "type": "FLOAT",
+        "description": "Developer Proceeds USD"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "buyer_city",
+        "type": "STRING",
+        "description": "City of Buyer"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "buyer_state",
+        "type": "STRING",
+        "description": "State of Buyer"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "buyer_postal_code",
+        "type": "STRING",
+        "description": "Postal Code of Buyer"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "buyer_country",
+        "type": "STRING",
+        "description": "Country of Buyer"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "timestamp",
+        "type": "INTEGER",
+        "description": "Unix Timestamp"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "creation_time",
+        "type": "TIMESTAMP",
+        "description": "Human readable time in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "last_modified",
+        "type": "TIMESTAMP",
+        "description": "Human readable time in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    }
+]

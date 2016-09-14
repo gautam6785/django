@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>		
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Moboo Dashboard | {% block title %}{% endblock %}</title>
+        {% include "partials/header.html" %}    
+    </head>
+    <body class="gray-bg">
+        <!--<h1>{% block head %}{% endblock %}</h1>-->
+        <div class="wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="messages-container">
+					  {% include 'partials/messages.html' %}
+					</div>
+			    </div>
+			</div>
+			{% block content %}
+			{% endblock %}
+		</div>
+    <script src="{{ STATIC_URL }}/js/jquery-2.1.1.js"></script>
+    <script src="{{ STATIC_URL }}/js/bootstrap.min.js"></script>
+    {% block javascript %}{% endblock %}
+    
+    {% verbatim %}
+		<script id="alert-template" type="x-tmpl-mustache">
+		  <div id="{{ id }}" class="alert alert-dismissible fade in {{ alert-class }}" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			{{ message }}
+		  </div>
+		</script>
+    {% endverbatim %}
+    </body>
+</html>

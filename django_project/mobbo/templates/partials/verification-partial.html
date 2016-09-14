@@ -1,0 +1,71 @@
+<script type="text/ng-template" id="verification.html">
+    <div type="primary">
+		<div class="location-verify">
+			<div class="lv-top-bar">
+				<span style="line-height: 4em;">Google Play Verification</span>
+				<div ng-click="cancel()" class="x-button common-button common-button-normal common-button-clear common-button-clear-normal common-button-nolabel" unselectable="on">
+					<div class="common-button-icon common-button-icon-x"></div>
+				</div>
+			</div>
+			<div class="lv-content">
+                
+                <!--<div class="spinner spinner-2step-verification" ng-hide="!loadingAccount">
+                      <h2>Authenticating with {%verbatim%}{{salesPlatform}}{%endverbatim%}</h2>
+                      <div class="rect1"></div>
+                      <div class="rect2"></div>
+                      <div class="rect3"></div>
+                      <div class="rect4"></div>
+                      <div class="rect5"></div>
+                </div>-->
+                
+                <div ng-hide="!loadingAccount" >
+					<div class="ibox ">
+						<div class="ibox-content">
+							<div class="spiner-example">
+								<h3 style="text-align:center;padding:0;margin:0">Authenticating with {%verbatim%}{{salesPlatform}}{%endverbatim%}</h3>
+								<div class="sk-spinner sk-spinner-wave">
+									<div class="sk-rect1"></div>
+									<div class="sk-rect2"></div>
+									<div class="sk-rect3"></div>
+									<div class="sk-rect4"></div>
+									<div class="sk-rect5"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> 
+                
+                
+
+                <iframe name="target" frameborder="0" id="verification_google_iframe" width="100%" height="100%" ng-hide="!showIframe"></iframe>
+
+				<div class="lv-message-box" ng-hide="!showVerification">
+					<div class="lv-message-title">Verification</div>
+					<div class="lv-message-body">
+						We attempted to access your Google Play account
+						<strong>'{%verbatim%}{{username}}{%endverbatim%}'</strong>
+						and discovered that an extra verification step is required.
+					</div>
+					<div style="margin-top: 20px">
+						<div class="lv-btn common-button common-button-normal common-button-orange common-button-orange-normal" unselectable="on">
+							<span class="common-button-label" ng-click="openVerificationAccountPopover('Google Cloud')">Verify with Google Play</span>
+						</div>
+					</div>
+				</div>
+
+                <div class="lv-message-box" ng-hide="!showVerificationFailed">
+					<div class="lv-message-title">Verification failed</div>
+					<div class="lv-message-body">Something didn't go right. Please try again.</div>
+					<div style="margin-top: 20px">
+                        <div class="lv-btn common-button common-button-normal common-button-gray common-button-gray-normal" unselectable="on">
+                            <span class="common-button-label" ng-click="openVerificationAccountPopover('Google Cloud')">Try Again</span>
+                        </div>
+                        <div class="lv-btn common-button common-button-normal common-button-orange common-button-orange-normal" unselectable="on">
+                            <span class="common-button-label" ng-click="cancel()">Close</span>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Sales Report{% endblock %}
+{% block head %}
+ Sales Report
+{% endblock %}
+{% block content %}
+    <table style="width:100%">
+		<tr>
+			<td>Product Title</td>
+			<td>Product ID</td> 
+			<td>Currency of Sale</td>
+			<td>Item Price</td>
+			<td>Charged Date</td>
+		</tr>
+		{% for sale in sales %}
+            <tr>
+			    <td>{{ sale.product_title}}</td>
+		    	<td>{{ sale.product_id}}</td> 
+			    <td>{{ sale.sale_currency}}</td>
+			    <td>{{ sale.item_price|floatformat:2 }}</td>
+			    <td>{{ sale.charged_date|date:"M d, Y" }}</td>
+		    </tr>
+        {% endfor %}
+    </table>
+
+	<div class="pagination">
+		<span class="step-links">
+			{% if sales.has_previous %}
+				<a href="?page={{ sales.previous_page_number }}">previous</a>
+			{% endif %}
+
+			<span class="current">
+				Page {{ sales.number }} of {{ sales.paginator.num_pages }}.
+			</span>
+			{% if sales.has_other %}
+				<a href="?page={{ sales.has_other_pages }}">next</a>
+			{% endif %}
+
+			{% if sales.has_next %}
+				<a href="?page={{ sales.next_page_number }}">next</a>
+			{% endif %}
+		</span>
+	</div>
+{% endblock %}

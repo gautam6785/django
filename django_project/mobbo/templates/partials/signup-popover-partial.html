@@ -1,0 +1,45 @@
+<script type="text/ng-template" id="signup_popover.html">
+	<div class="signup-header">
+    <span class="navbar-brand" style="font-size:1.5em;margin-top:15px;margin-left:10px" href="/">Free Dashboard, Follow Competitors</span>
+    <a ng-click="cancel()" style="float:right" class="cancel-button">
+      <i class="mdi-content-clear"></i>
+    </a>
+    <div style="clear:both"></div>
+  </div>
+
+  <div class="modal-body signup-form">
+    <div class="left-form">
+      <form ng-submit='signUp()'>
+        {% csrf_token %}
+        <input class="form-control" type="text" ng-model="name" name="Name" required placeholder="Your name"/>
+        <br />
+        <input class="form-control" ng-model="email" name="Email" type="email" required placeholder="Your email address" />
+        <br />
+        <input class="form-control" type="password" ng-model="password" name="Password" required placeholder="Password" />
+        <BR  />
+        <input class="btn btn-primary" type="submit" value="Sign Up" />
+              <div style="margin-top:10px"><em>Already registered? <a style="text-decoration:underline" href="/accounts/login/">Login here.</a></em></div>
+
+      <div class="alert alert-danger" role="alert" ng-if="error">
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
+        <span class="sr-only">Error:</span>
+        {% verbatim %}{{error}}{% endverbatim %}
+      </div>
+      </form>
+    </div>
+
+    <div class="hidden-xs" style = "background-color:white;padding:10px;float:left;width:50%;padding-right:0" class="shadow-z-1">
+      <ul class="talking-points">
+        <li><span class="active-step">1</span>Sign up.</li>
+        <li><span>2</span>Connect your App accounts.</li>
+        <li><span><i class="mdi-navigation-check"></i></span>We'll do the math.</li>
+      </ul>
+      <div style="margin-top:-7px;font-size:1.5em"><em>Questions? <a href="mailto:help@apptheta.com">help@apptheta.com</a></em>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+  </div>
+</script>

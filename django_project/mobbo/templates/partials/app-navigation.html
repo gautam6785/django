@@ -1,0 +1,44 @@
+{% with request.resolver_match.url_name as url_name %}
+	<nav class="navbar-default navbar-static-side" role="navigation">
+		<div class="sidebar-collapse">
+			<ul class="nav metismenu" id="side-menu">
+				<li class="app-header">
+					<img src="{{app_info.icon_url}}" alt="" />
+					<span class="product-name">{{app_info.name}}</span>
+				</li>
+				<!--<li class="{% if url_name == 'app_details' %}active{% endif %}">
+					<a href="/dashboard/app_details/{{app_info.app_info_id}}"><i class="fa fa-info-circle"></i> <span class="nav-label">Details</span></a>
+				</li>-->
+				<li class="{% if url_name == 'app_download' %}active{% endif %}">
+					<a href="/dashboard/app_download/{{app_info.app_info_id}}/ALL"><i class="fa fa-arrow-circle-down"></i> <span class="nav-label">Downloads</span>  </a>
+				</li>
+				
+				<li class="{% if url_name == 'app_revenue' %}active{% endif %}">
+					<a href="/dashboard/app_revenue/{{app_info.app_info_id}}/ALL"><i class="fa fa-usd circle-dollar-o"></i> <span class="nav-label">Revenue</span></a>
+				</li>
+				
+				<li class="{% if url_name == 'ad_revenues' %}active{% endif %}">
+                                        <a href="/ad-revenues/app_revenues/{{app_info.app_info_id}}/ALL"><i class="fa fa-usd circle-dollar-o"></i> <span class="nav-label">Ad Revenues</span></a>
+                                </li>
+				<li class="{% if url_name == 'ARPU' %}active{% endif %}">
+                                        <a href="/ad-revenues/arpu/{{app_info.app_info_id}}"><i class="fa fa-usd circle-dollar-o"></i> <span class="nav-label">ARPU</span></a>
+                                </li>
+				<!--<li class="{% if url_name == '' %}active{% endif %}">
+					<a href="/dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Dashboards</span></a>
+				</li>-->
+				<!--<li class="{% if url_name == 'dashboard' %}active{% endif %}">
+					<a href="/dashboard"><i class="fa fa-link"></i> <span class="nav-label">Connections</span></a>
+				</li>-->
+				<!--<li class="{% if url_name == 'apps' %}active{% endif %}">
+					<a href="/dashboard/apps"><i class="fa fa-desktop"></i> <span class="nav-label">Apps</span></a>
+				</li>-->
+				<!--<li class="">
+					<a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Support</span></a>
+				</li>-->
+				<li class="{% if url_name == 'app_connections' %}active{% endif %}">
+                                        <a href="/ad-revenues/app_connections/{{app_info.app_info_id}}"><i class="fa fa-link"></i> <span class="nav-label">App Links</span></a>
+                                </li>
+			</ul>
+		</div>
+    </nav>
+{% endwith %}

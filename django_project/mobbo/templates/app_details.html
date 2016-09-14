@@ -1,0 +1,142 @@
+{% extends "dashboard/app-details-base.html" %}
+{% block title %}{{app_info.name}} - App Store Ranks and Revenue{% endblock %}
+{% block head %}
+ App Details
+{% endblock %}
+{% block content %}
+
+<div id="wrapper">
+	<div class="top_header">
+		{% include "partials/top-header.html" %}
+	</div>
+	{% include "partials/app-navigation.html" %}
+	<div id="page-wrapper" class="gray-bg dashbard-1">
+		<div class="row border-bottom padding-10">
+			<div class="col-lg-12">
+				<div class="app-info-top aa-info-columns aa-info-columns-app">
+					<div class="name">
+						<h2 class="asset-name">{{app_info.name}}</h2>
+						<label class="asset-type">[App]</label>
+						<div class="aa-sharing-link">
+						</div>
+					</div>
+					<div class="row-control-group clearfix summary-container">
+						<div class="left-align-controls summary">
+							<div class="summary-item">
+								<label>Store</label>
+								<div class="value">
+									<a target="_blank" href="https://play.google.com/store/apps/details?id={{app_info.app}}" title="{{app_info.platform}}" class="summary-item-text">{{app_info.platform}}</a>
+									<i class="fa fa-external-link"></i>
+								</div>
+							</div>
+							<div class="summary-item">
+								<label>Price</label>
+								{% if app_info.price == None %}
+									<div class="value">
+										Free
+									</div>
+								{% else %}
+									<div class="value">
+										{{ app_info.price|floatformat:2}} USD
+									</div>
+								{% endif %}
+							</div>
+							<div class="summary-item">
+								<label>Publisher</label>
+								<div class="value">
+									<a href="#" title="Tap.pm" class="summary-item-text">{{app_info.developer}}</a>
+								</div>
+							</div>
+							<!--<div class="summary-item">
+								<label data-toggle="tooltip" title="A consistent name for grouping an app's different versions within and across stores. The data is maintained by and is property of App Annie.">Unified App</label>
+								<div class="value">
+									<label data-toggle="tooltip" title="Data is not yet available">N/A</label>
+								</div>
+							</div>
+							<div class="summary-item">
+								<label data-toggle="tooltip" title="A collection of apps sharing the same intellectual property, similar to movie franchise. The data is maintained by and is property of App Annie.">App Franchise</label>
+								<div class="value">
+									<label data-toggle="tooltip" title="Data is not yet available">N/A</label>
+								</div>
+							</div>-->
+						</div>
+						<div class="right-align-controls"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--  -->
+		<div class="app-report-note padding-10">
+				The data was collected from the App Store on Feb 05, 2016. Please note Mobbo Dashboard is not responsible for the content provided by the App Store.
+		</div>
+		
+		<div class="app-slider-area">
+			<div class="app-slider">
+				<ul class="">
+					{% for app_screenshot in app_screenshots %}
+						<li class="img-holder"><img alt="" src="{{ app_screenshot.screenshots}}"></li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		
+		<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 app-lft-block">
+			
+			<h3>Description</h3>
+			
+			{{app_info.description|safe}}
+		</div>
+		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 app-rgt-block">
+			<h3>Revenue Estimate</h3>
+			<div class="revenue-chart-area">
+				<img src="{{ STATIC_URL }}img/app-revenue-chart.jpg" alt="" />
+				<div class="revenue-info">Get downloads and revenue estimates for this app with a premium subscription to Intelligence.</div>
+				<div class="revenue-demo">
+					<a href="javascript:void(0);">Learn More</a>
+				</div>
+			</div>
+			<ul class="app-links">
+				{% if app_info.developer_website|length > 0 %}
+					<li>
+						<a target="_blank" href="{{app_info.developer_website}}">Visit Developer's Website <i class="fa fa-external-link"></i> </a>
+					</li>
+				{% endif %}
+				{% if app_info.developer_email|length > 0 %}
+					<li>
+						<a target="_blank" href="mailto:{{app_info.developer_email}}">Email Developer <i class="fa fa-external-link"></i> </a>
+					</li>
+				{% endif %}
+			</ul>
+			
+			<h4>About</h4>
+			<ul class="app-about-ul">
+				{% if app_info.required_android_version|length > 0 %}
+					<li><strong>OS:</strong>{{app_info.required_android_version}}</li>
+				{% endif %}
+				{% if app_info.size|length > 0 %}
+					<li><strong>Size:</strong> {{app_info.size}}</li>
+				{% endif %}
+				{% if app_info.category|length > 0 %}
+					<li><strong>Category:</strong> {{app_info.category}}</li>
+				{% endif %}
+				{% if app_info.content_rating|length > 0 %}
+					<li><strong>Content Rating:</strong> {{app_info.content_rating}}</li>
+				{% endif %}
+				<li><strong>In-App Purchase:</strong> Yes</li>
+				{% if app_info.install|length > 0 %}
+					<li><strong>Installs:</strong> {{app_info.install}}</li>
+				{% endif %}
+			</ul>
+			
+		</div>
+		<!--  -->
+	</div>
+</div>
+{% endblock %}
+{% block js_content %}
+<script>
+	  // these variables are set for drilldowns, but not the main dashboard
+	  app = "{{app_info | safe}}";
+</script>
+{% endblock %}

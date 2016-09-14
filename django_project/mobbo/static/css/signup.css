@@ -1,0 +1,77 @@
+  .left-form {
+   	 float:left;width:50%;height:100%;
+  }
+  .cancel-button i {
+  	padding:0;
+    font-size: 24px;
+    color:white;
+  }
+  .cancel-button {
+  	margin-top:-10px !important;
+    padding-left:5px !important;
+    height:34px !important;
+    width:34px !important;
+  }
+  .talking-points {
+  	font-size:18px;
+  	color:gray;
+  	padding-left:0;
+  }
+  .talking-points li {
+  	margin-bottom:20px;
+  }
+  .talking-points i {
+  	font-weight:bold;
+  	font-size:24px;
+  	font-color:black;
+  }
+  .talking-points {
+  	list-style-type:none;
+  	margin-bottom:35px;
+  }
+  .talking-points  span {
+  	margin-right:10px;
+  	display:inline-block;
+  	height:28px;
+  	width:28px;
+  	text-align:center;
+  	border-radius: 14px;
+  	padding-top:2px;
+  	background-color:rgba(0,0,0,.1);
+  }
+  .left-form input {
+  	width:85%;
+  }
+
+  .signup-header {
+  	background-color:white;
+  	padding:5px;
+  	padding-left:10px;
+    height:50px;
+  }
+
+  .signup-header a {
+  	position:absolute;
+  	right:10px;
+  	top:25px;
+  }
+
+  .signup-form label {
+  	font-color:gray;
+  }
+  
+  .signup-form {
+    margin-top:20px;
+  }
+
+@media screen and (max-width : 500px) {
+    .left-form {
+       width:100%;
+     }
+
+    .left-form input {
+      width:100%;
+    }
+
+  }
+

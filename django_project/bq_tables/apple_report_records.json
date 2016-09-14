@@ -1,0 +1,165 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "customer_id",
+        "type": "INTEGER",
+        "description": "Customer ID"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "customer_account_id",
+        "type": "INTEGER",
+        "description": "Customer Account ID"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "apple_identifier",
+        "type": "INTEGER",
+        "description": "Apple Identifier"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "provider",
+        "type": "STRING",
+        "description": "Provider"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "provider_country",
+        "type": "STRING",
+        "description": "Provider Country"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "sku",
+        "type": "STRING",
+        "description": "Sku"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "developer",
+        "type": "STRING",
+        "description": "Developer"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "title",
+        "type": "STRING",
+        "description": "Title"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "version",
+        "type": "STRING",
+        "description": "Version"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "product_type_identifier",
+        "type": "STRING",
+        "description": "Product Type Identifier"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "units",
+        "type": "FLOAT",
+        "description": "Units"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "developer_proceeds",
+        "type": "FLOAT",
+        "description": "Developer Proceeds"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "developer_proceeds_usd",
+        "type": "FLOAT",
+        "description": "Developer Proceeds USD"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "begin_date",
+        "type": "TIMESTAMP",
+        "description": "Human readable date in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "end_date",
+        "type": "TIMESTAMP",
+        "description": "Human readable date in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "customer_currency",
+        "type": "STRING",
+        "description": "Customer Currency"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "country_code",
+        "type": "STRING",
+        "description": "Country Code"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "currency_of_proceeds",
+        "type": "STRING",
+        "description": "Currency Of Proceeds"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "customer_price",
+        "type": "FLOAT",
+        "description": "Customer Price"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "promo_code",
+        "type": "STRING",
+        "description": "Promo Code"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "parent_identifier",
+        "type": "STRING",
+        "description": "Parent Identifier"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "subscription",
+        "type": "STRING",
+        "description": "Subscription"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "period",
+        "type": "STRING",
+        "description": "Period"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "category",
+        "type": "STRING",
+        "description": "Category"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "cmb",
+        "type": "STRING",
+        "description": "Cmb"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "device",
+        "type": "STRING",
+        "description": "Device"
+    },
+    
+    {
+        "mode": "NULLABLE",
+        "name": "supported_platforms",
+        "type": "STRING",
+        "description": "Supported Platforms"
+    }
+]

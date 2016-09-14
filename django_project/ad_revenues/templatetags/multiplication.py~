@@ -1,0 +1,7 @@
+@register.filter(name='multiply')
+def multiply(value, arg):
+        return value*arg
+
+@register.filter(name='divide')
+def divide(value, arg):
+        return value/arg

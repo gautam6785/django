@@ -1,0 +1,230 @@
+<div id="modal_all" class="modal fade inmodal app-modal" aria-hidden="true" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title text-left">Select the platform</h4>
+            <ul class="tabs">
+                <li class="active"><a href="#">1. Select the platform</a></li>
+                <li><a href="#">2. Configration</a></li>
+                <li><a href="#">3. It's Done</a></li>
+            </ul>
+        </div>
+      <div class="modal-body">
+        <h2>App store</h2>
+        <ul class="app-store-ul">
+        {% for app_store,data in supported_app_stores.items %}
+            <li>
+                <a href="#" onclick="panel_fade()" ng-click="openAddAccountPopover('{{data.label}}')" >
+                    <img alt="image" class="" src="{{ STATIC_URL }}img/{{data.icon}}" />
+                    {{data.label}}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+        <h2>AD platform</h2>
+        <ul class="app-store-ul">
+                
+      	{% for platform,data in supported_platforms.items %}
+                <li style="width:30%; margin-right:2%">
+                    <a onclick="panel_fade();add_platform('{{platform}}')">
+                        <img alt="{{data.submit.0}}" class="" src="{{ STATIC_URL }}img/{{data.submit.0}}" />
+                        {{platform}}
+                    </a>
+                </li>
+                {% if forloop.counter|divisibleby:3 %} 
+                    <div style="margin-top:10px"> <!--create a little space between lines --></div> 
+                {% endif %}
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% for platform,data in supported_platforms.items %}
+<div id="modal_{{platform}}" class="modal fade inmodal app-modal" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" ng-click="cancel()" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title text-left">Add {{platform}} Ad Network </h4>
+            <ul class="tabs">
+                    <li><a href="#">1. Select the platform</a></li>
+                    <li class="active"><a href="#">2. Configration</a></li>
+                    <li><a href="#">3. It's Done</a></li>
+            </ul>
+        </div>
+        <div class="modal-body">
+            <h3 style="margin-bottom:20px">
+                <img style="height:24px;margin-right:10px;margin-top:-5px" src="{{ STATIC_URL }}img/{{data.submit.0}}"/>
+                {{platform}}
+            </h3>
+            <ul class="app-acc-ul">
+                {% for field in data.fields %}
+                <li>
+                    <label>{{field.disp}}</label><i class="fa fa-question-circle pull-right"></i>
+                    <input id="{{platform}}_{{field.name}}" type="{{field.type}}">
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="plaform-submit">
+                <button class="btn btn-primary" onclick="submit_creds('{{platform|safe}}')">{{data.submit.1}}</button>
+            </div>
+            <div class="paltform-message">
+                <br>
+                <p>{{data.message}}</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<div id="modal_done" class="modal fade inmodal app-modal" aria-hidden="true" role="dialog" 
+    data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title text-left">Select the platform</h4>
+            <ul class="tabs">
+                <li><a href="#">1. Select the platform</a></li>
+                <li><a href="#">2. Configration</a></li>
+                <li class="active"><a href="#">3. It's Done</a></li>
+            </ul>
+        </div>
+      <div class="modal-header">
+        <div style="width:100%; height:150px; line-height:150px; text-align:center;">
+        <h3 style="display:inline-block; vertical-align:middle; line-height:normal; " id="modal_done_message" class="js_messages">
+            <!-- Insert message -->
+        </h3>
+        </div>
+        <ul class="tabs">
+            <li class="active"><a href="/dashboard"> Next </a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% block add-platform-js%}
+
+<script>
+var curr_modal = ""
+function panel_fade()
+{
+	$("#modal_all").modal('hide');
+}
+function add_platform(platform)
+{
+	if(curr_modal)
+		$("#"+curr_modal).modal('hide');
+	$("#modal_"+platform).modal('show');
+	curr_modal = "modal_"+platform;
+	
+}
+function modal_done(message,color)
+{
+    if(curr_modal)
+        $("#"+curr_modal).modal('hide');
+    $("#modal_done").modal('show');
+    $("#modal_done_message").text(message)
+    $("#modal_done_message").css("color", color)
+    curr_modal="modal_done";
+}
+
+function submit_creds(p)
+{
+	platforms_string = "{{supported_platforms | safe}}";
+	platforms_string = platforms_string.replace(/\'/g,"\"")
+	platforms = JSON.parse(platforms_string);
+	platform = platforms[p];
+	
+	fields = platform['fields'];
+	form = {};
+	for (var i in platform['fields'])
+	{
+		form[fields[i].name] = $("#"+p+"_"+fields[i].name).val();
+	} 
+	form['csrfmiddlewaretoken']="{{csrf_token}}";
+	//console.log(form)
+	//console.log( platform.action)
+	//console.log( form )
+        $.post("/ad-revenues/signup/"+p+"/", form).done(function(response_string){
+                response = JSON.parse(response_string)
+		console.log(response['url'])
+		if (response['url'])
+		{
+                    window.location.replace(response['url'])
+		} 
+		else if (response == "0")
+		{
+                    message = "Failed to authenticate user." +
+                                "\nPlease check if all the details are correct."
+                    color = "red"
+                    modal_done(message, color)
+		}
+		else if (response['alert'])
+		{
+                    alert(response['alert'])
+		}
+		else if (response['message'])
+		{
+                    message = response['message']
+                    color = "green"
+                    if (response['color'])
+                        color = response['color']
+                    modal_done(message, color)
+		}
+		else if (response == "1")
+		{
+                        message = "Account added succesfully" 
+                        color = "green"
+                        modal_done(message, color)
+		}
+		
+	});
+}
+
+window.onload = function() {
+    params_sq = window.location.search
+    if (params_sq != "")
+    {
+        params_s = params_sq.slice(1)
+        ps = params_s.split("&")
+        params = {}
+        for (var i in ps)
+        {
+            kv=ps[i].split("=")
+            k=kv[0];v=kv[1]
+            params[k]=v
+        }
+        if ('success' in params)
+        {
+            if (params["success"] == 1){
+                message = "Account added succesfully" 
+                color = "green"
+                modal_done(message, color)
+            }
+            else if (params["success"] == 0){
+                message = "Failed to authenticate user." 
+                color = "red"
+                modal_done(message, color)
+            }
+        }
+    }
+}
+
+</script>
+
+{% endblock %}

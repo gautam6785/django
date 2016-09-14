@@ -1,0 +1,92 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "customer_id",
+        "type": "INTEGER",
+        "description": "Customer ID"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "customer_account_id",
+        "type": "INTEGER",
+        "description": "Customer Account ID"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "date",
+        "type": "TIMESTAMP",
+        "description": "Human readable date in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "package_name",
+        "type": "STRING",
+        "description": "Package Name"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "country",
+        "type": "STRING",
+        "description": "Country"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "current_device_installs",
+        "type": "INTEGER",
+        "description": "Current Device Installs"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "daily_device_installs",
+        "type": "INTEGER",
+        "description": "Daily Device Installs"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "daily_device_uninstalls",
+        "type": "INTEGER",
+        "description": "Daily Device Uninstalls"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "daily_device_upgrades",
+        "type": "INTEGER",
+        "description": "Daily Device Upgrades"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "current_user_installs",
+        "type": "INTEGER",
+        "description": "Current User Installs"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "total_user_installs",
+        "type": "INTEGER",
+        "description": "Total User Installs"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "daily_user_installs",
+        "type": "INTEGER",
+        "description": "Daily User Installs"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "daily_user_uninstalls",
+        "type": "INTEGER",
+        "description": "Daily User Uninstalls"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "creation_time",
+        "type": "TIMESTAMP",
+        "description": "Human readable time in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "last_modified",
+        "type": "TIMESTAMP",
+        "description": "Human readable time in UTC (format: YYYY-MM-DD hh:mm:ss)"
+    }
+]

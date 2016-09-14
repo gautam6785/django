@@ -1,0 +1,132 @@
+{% extends "ad_revenues/app-download-base.html" %}
+{% block title %}{{app_info.name}} - App Store Ranks and Revenue{% endblock %}
+{% block head %}
+App Details
+{% endblock %}
+{% block content %}
+
+<div id="wrapper">
+    <div class="top_header">
+        {% include "partials/top-header.html" %}
+    </div>
+    {% include "partials/app-navigation.html" %}		
+                
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+    
+    {% if foreign_ids_len > 0 %}
+    
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="info-box shadow-z-1 application" style="padding:20px;background-color:white;margin-bottom:20px;float:left;width:100%">
+                                        
+                    
+                    <h3 style="margin-top:0" class="application">Ad Revenues stats</h3>
+                    
+                    <div class="" style="margin-bottom:10px" ng-if="graphData.dataLoaded">
+                        <button type="button" class="btn btn-primary btn-breakdown" ng-click="breakdownPickerService.breakdownChange('country')">By Country</button>
+                        <button type="button" class="btn btn-primary btn-breakdown" ng-click="breakdownPickerService.breakdownChange('platform')">By Platform</button>
+                    </div>
+                    
+                    <div class='application' style="margin-top:6px" ng-if="graphData.dataLoaded">		
+                            {% include 'partials/date-selector-partial.html' %}
+                    </div>
+                    
+                    <a class="application category-picker ng-cloak" ng-click="openCountryPopover('lg')">
+                                    {% verbatim %}	{{selectedCountry}}{% endverbatim %}
+                                    &nbsp;<span class="caret"></span>
+                    </a>
+                            
+                </div>
+            </div>
+        </div>
+                        
+                
+        {% verbatim %}
+<!--         <div ng-if="!graphData.raw_data.othersData.length" > -->
+        <div ng-if="!graphData.dataLoaded" >
+            <div class="ibox ">
+                <div class="ibox-content">
+                    <div class="spiner-example">
+                        <h3 style="text-align:center;padding:0;margin:0">Ad Revenues stats loading.</h3> 
+                        <div class="sk-spinner sk-spinner-wave">
+                            <div class="sk-rect1"></div>
+                            <div class="sk-rect2"></div>
+                            <div class="sk-rect3"></div>
+                            <div class="sk-rect4"></div>
+                            <div class="sk-rect5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ibox " ng-if="graphData.dataLoaded" >
+                <div class="ibox-content">				  
+                    <nvd3 style="z-value:2" options='graphData.graphs.options' data='graphData.graphs.data'></nvd3>
+                    {% endverbatim %} {% include "partials/mobbo-watermark-div.html" %} {% verbatim %}
+                </div>
+        </div>
+
+        <div id="ad_revenues" class="ibox" ng-cloak ng-if="graphData.dataLoaded" ng-init="graphData.selectedTablePage=0" > 
+            <div class="ibox-content">
+                <table ng-repeat="page in []| range:graphData.raw_data.othersData.length/10+1" 
+                        class="table table-striped table-bordered table-hover app-revenue-tbl" id="revenues_table_{{page}}" ng-if="graphData.selectedTablePage == page">
+                <thead>
+                <tr>
+                        <th> Country </th>
+                        <th> Ad Revenues </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in graphData.raw_data.othersData| orderBy: '-total' | subArray: page*10:page*10+10"> 
+                        <td>{{row.key}}</td>
+                        <td>${{row.total | number}}</td>
+                </tr>
+                </tbody>
+                </table>
+                <ul class="pagination" >
+                        <li ng-repeat="page in []| range:graphData.raw_data.othersData.length/10+1">
+                                <a ng-click="graphData.selectedTablePage=page">{{page + 1}}</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+            
+        {% endverbatim %}
+        
+        {% else %}
+            <div style="width:100%; height:500px; line-height:500px; text-align:center;">
+                <h1 style="display:inline-block; vertical-align:middle; line-height:normal; " >
+                
+                    You have no Ad Networks connected to this application<br> 
+                    <a href="/ad-revenues/app_connections/{{app_info.app_info_id}}"> add an ad network now </a>
+                    
+                </h1>
+            </div>
+        
+        {% endif %}
+        
+    </div>
+</div>
+
+<noscript>
+    <style>
+        .application { display: none !important; }
+    </style>
+</noscript>
+{% endblock %}
+{% block js_content %}
+<script>
+        // these variables are set for drilldowns, but not the main dashboard
+        app = "{{app_info | safe}}";
+
+        tablePage=1;
+        function switchTablePage(page){
+                $("#revenues_table_"+tablePage).hide()
+                $("#revenues_table_"+page).show()
+                tablePage = page
+        }
+
+</script>
+
+{% endblock %}

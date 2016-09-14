@@ -1,0 +1,188 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "customer_id",
+        "type": "INTEGER",
+        "description": "Customer ID"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "app",
+        "type": "STRING",
+        "description": "App package id"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "name",
+        "type": "STRING",
+        "description": "App Name"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "identifier",
+        "type": "INTEGER",
+        "description": "App identifier"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "artist_id",
+        "type": "INTEGER",
+        "description": "Artist id"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "platform",
+        "type": "STRING",
+        "description": "Platform"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "platform_type_id",
+        "type": "INTEGER",
+        "description": "Product type id"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "category",
+        "type": "STRING",
+        "description": "App Category"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "price",
+        "type": "FLOAT",
+        "description": "App price"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "formatted_price",
+        "type": "STRING",
+        "description": "Formatted price"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "currency",
+        "type": "STRING",
+        "description": "currency"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "description",
+        "type": "STRING",
+        "description": "App description"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "icon_url",
+        "type": "STRING",
+        "description": "App icon url"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "app_screenshots",
+        "type": "STRING",
+        "description": "App screenshots"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "rating",
+        "type": "STRING",
+        "description": "App rating"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "rating1",
+        "type": "INTEGER",
+        "description": "App rating1"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "rating2",
+        "type": "INTEGER",
+        "description": "App rating2"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "rating3",
+        "type": "INTEGER",
+        "description": "App rating3"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "rating4",
+        "type": "INTEGER",
+        "description": "App rating4"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "rating5",
+        "type": "INTEGER",
+        "description": "App rating5"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "version",
+        "type": "STRING",
+        "description": "App version"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "content_rating",
+        "type": "STRING",
+        "description": "App content rating"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "size",
+        "type": "STRING",
+        "description": "App size"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "developer",
+        "type": "STRING",
+        "description": "App developer"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "developer_email",
+        "type": "STRING",
+        "description": "App Developer email"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "developer_website",
+        "type": "STRING",
+        "description": "App Developer website"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "install",
+        "type": "STRING",
+        "description": "App install"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "has_iap",
+        "type": "INTEGER",
+        "description": "App has iap"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "iap_min",
+        "type": "FLOAT",
+        "description": "App iap min"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "iap_max",
+        "type": "FLOAT",
+        "description": "App iap max"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "release_date",
+        "type": "TIMESTAMP",
+        "description": "App release date"
+    }
+]

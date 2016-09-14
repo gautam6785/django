@@ -1,0 +1,96 @@
+{% extends "dashboard/app-details-base.html" %}
+{% block title %}{{app_info.name}} - App Store Ranks and Revenue{% endblock %}
+{% block head %}
+App Details
+{% endblock %}
+{% block content %}
+	
+<div id="wrapper">
+    <div class="top_header">
+        {% include "partials/top-header.html" %}
+    </div>
+    {% include "partials/app-navigation.html" %}                
+
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        
+        <div style="padding-top:10px">	
+            <h3> Connected platforms: </h3>
+            <table class="table table-striped">
+                <thead>
+                    <th> platform </th>
+                    <th> foreign id
+                    <th></th>
+                </thead>
+                <tbody>
+                {% for foreign_id in app_info.foreign_ids.all %}
+                    <tr>
+                        <td>{{foreign_id.platform}}</td> 
+                        <td>{{foreign_id.foreign_id}}</td>
+                    </tr>
+                {%endfor%}	
+                </tbody>
+            </table>
+        </div>
+        
+        {% if platforms %}
+        <div>
+        
+            <form action="/ad-revenues/connect-app2platform/{{app_info.app_info_id}}/" method="post"> 
+                {% csrf_token %} 
+                <table class="table" style="width:50%">
+                    <tr>
+                        <td>
+                            <label>Select Platform</label>
+                        </td>
+                        <td>
+                            <select value="Select platform" name="platform">
+                                {% for platform in platforms %}
+                                <option value="{{platform}}">{{platform}}</option>
+                                {% endfor %}
+                            </select>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="fid">App Id: </label>
+                        </td>
+                        <td>
+                            <input id="fid" type="text" name="foreign_id"> 
+                        </td>
+                    </tr>
+                </table>
+                <input class="btn btn-primary" type="submit" value="Connect">
+            </form>
+            {% if messages %}
+            <div> 
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if 'error' in message.tags %} style="color:red" {% endif %}>{{ message }}</li>
+                    {% if 'ADD_ACCOUNT' in message.tags %} <a href="/dashboard"> Add Account </a> {% endif %}
+                {% endfor %}
+            </ul>
+            </div>
+            {% endif %}
+
+        </div>
+        {% else %}
+        <div>
+            No More Platforms To Connect 
+        </div> 
+        {% endif %}
+        
+    </div>
+</div>
+<noscript>
+    <style>
+        .application { display: none !important; }
+    </style>
+</noscript>
+{% endblock %}
+{% block js_content %}
+<script>
+	  // these variables are set for drilldowns, but not the main dashboard
+	  app = "{{app_info | safe}}";
+</script>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Report{% endblock %}
+{% block head %}
+    Report
+{% endblock %}
+{% block content %}
+    {{loginInfos.external_service}}
+    <table>
+		<tr>
+			<td>Charge Date</td>
+			<td>Product Id</td>
+		</tr>
+        {% for record in records %}
+            <tr>
+                <td>{{record.charged_date}}</td>
+                <td>{{record.product_id}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+{% endblock %}

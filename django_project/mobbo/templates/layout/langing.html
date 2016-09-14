@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>		
+		<meta charset="utf-8">
+        <title>{% block title %}Moboo Dashboard{% endblock %}</title>
+        {% block meta %}
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+        {% include "partials/head.html" %} 
+        {% block stylesheet %}{% endblock %}   
+    </head>
+	<body class="home-page landing-page top-navigation">
+		{% include "partials/top-navigation-menu.html" %}
+		{% include "partials/slider.html" %}					
+		<div id="wrapper">
+			<div id="page-wrapper" class="gray-bg">
+				{% block content %}{% endblock %}
+				
+			</div>
+		</div>
+        {% block javascript %}
+        
+        
+        {% endblock %}
+	</body>
+</html>

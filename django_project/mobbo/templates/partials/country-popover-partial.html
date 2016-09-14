@@ -1,0 +1,61 @@
+{% verbatim %}
+<script type="text/ng-template" id="country_popover.html">
+	<div class="modal-header modal-header-product">
+		<h3 style="float:left" class="modal-title">Select Country</h3>
+		<button style="float:right;margin-top:-5px" class="btn btn-primary" ng-click="cancel()">Cancel</button>
+		<button style="float:right;margin-top:-5px" class="btn btn-primary" ng-click="fetchDataForCountry(selection)">Done</button>-
+		<div style="clear:both"></div>
+	</div>	
+
+	<div class="modal-body modal-body-product">
+		<div style="margin-left:15px">
+		    <!--<div class="btn-group">	  
+			    <label ng-repeat="country in CountryInfoService.country" class="btn btn-primary col-xs-3" ng-model="CountryInfoService.selectedCountry" btn-checkbox="country" ng-change="fetchDataForCountry(country)">
+				    {{country.name}}
+			    </label>
+		    </div>-->
+			<div class="row">
+				<div class="col-lg-12">
+						<div class="tabs-container">
+							<ul class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#tab-1">Most Popular</a></li>
+								<li class=""><a data-toggle="tab" href="#tab-2">All Countries</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="tab-1" class="tab-pane active">
+									<div class="panel-body">
+										<div class="btn-group countriesGroup">
+											<div ng-repeat="country in graphData.allcountryArrays"  class="btn btn-primary col-xs-2" ng-if="country.top" ng-class="{'active' : country.checked}" >
+												<input class="uniqueCheckbox" id="{{country.id}}" type="checkbox" value="{{country.id}}"  ng-model="country.checked" ng-click="toggleSelection(country)" />
+												<label title="{{country.name}}" for="{{country.id}}">{{country.name}}</label>
+											</div>
+			                            </div>
+									</div>
+								</div>
+								<div id="tab-2" class="tab-pane height-fix">
+									<div class="panel-body">
+										<div class="btn-group countriesGroup">
+											<div ng-repeat="country in graphData.allcountryArrays"  class="btn btn-primary col-xs-2" ng-class="{'active' : country.checked}" >
+												<input class="uniqueCheckbox" id="{{country.id}}" type="checkbox" value="{{country.id}}"  ng-model="country.checked" ng-click="toggleSelection(country)" />
+												<label title="{{country.name}}" for="{{country.id}}">{{country.name}}</label>
+											</div>
+			                            </div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+				</div>
+		    </div>
+			
+			<!--<div ng-repeat="name in selection" class="selected-item">
+		         {{name}}
+		    </div>-->
+			
+		</div>
+	</div>
+
+	<div class="modal-footer modal-footer-product"></div>
+</script>
+{% endverbatim %}

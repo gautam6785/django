@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Welcome to Mobbo Dashboard{% endblock %}
+{% block head %}Welcome to Mobbo Dashboard{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}  <a href="{% url 'accounts:logout' %}">[logout]</a></p>
+	{% else %}
+		<p>Welcome, Guest <a href="{% url 'accounts:login' %}">[login]</a></p>
+	{% endif %}
+	
+	{% if user.is_authenticated %}
+        <p><a href="{% url 'accounts:logout' %}">[Add google play account details]</a></p>
+	{% endif %}
+	
+	
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "dashboard/dashboard-base.html" %}
+{% block title %}Account List | Mobbo dashboard{% endblock %}
+{% block head %}
+	Account List | Mobbo dashboard
+{% endblock %}
+{% block content %}
+    <div id="wrapper">
+		
+		<div class="top_header">
+			{% include "partials/top-header.html" %}
+		</div>
+		
+		{% include "partials/account-navigation.html" %}
+		{% include "partials/confirm-delete-account-popover-partial.html" %}
+		{% include "partials/add-account-popover-partial.html" %}
+		{% include "partials/verification-partial.html" %}
+        {% include "partials/verification-account-popover-partial.html" %}
+        
+        <iframe id="lv-frame" frameborder="0" style="display: none;"></iframe>
+        <div id="page-wrapper" class="gray-bg dashbard-1" ng-controller="AccountController">
+            
+            {% if itunes_accounts.0 or google_play_accounts.0 %}
+				<div class="row wrapper border-bottom white-bg page-heading">
+					<div class="col-sm-6">
+						<h2><strong>App Store</strong></h2>
+					</div>
+				</div>
+				{% for account in google_play_accounts %}
+					{% if account.external_service == 'Google Cloud' %}
+						<div class="row wrapper wrapper-content connection-panel white-bg border-bottom">
+							<div class="col-lg-1 text-center">
+								<div class="ibox float-e-margins">
+									<img alt="image" class="" src="{{ STATIC_URL }}img/google-play.png" />
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<h3>My Google Play Account</h3>
+								<ul class="connection-acc-ul">
+									<li><label>Email</label> <span>{{account.username}}</span></li>
+									<li><label>Status</label> <span class="green-color-text">Connected!</span></li>
+									<li><label>Latest Report</label> <span>{{account.latest_report|date:"M d, Y" }}</span></li>
+									<li><label>Created Time</label> <span>{{account.creation_time|date:"M d, Y" }}</span></li>
+								</ul>
+							</div>
+							<div class="col-lg-4">
+								<h3>&nbsp;</h3>
+								<ul class="app-count-ul">
+									<li><label>App count:</label> <span class="app-counts">{{account.app_count}}</span></li>
+								</ul>
+								<ul class="app-imgs-ul">
+									{% for icon in account.icon %}
+										{% if forloop.counter <= 20 %}
+											{% if icon.icon|slice:"2" == 'ht' %}
+												{% if forloop.counter == 20 %}
+													<li>...</li>
+												{% else %}
+													<li><img alt="image" class="" src="{{ icon.icon}}" /></li>
+												{% endif %}		
+											{% else %}
+												{% if forloop.counter == 20 %}
+													<li>...</li>
+												{% else %}
+													<li><img alt="image" class="" src="//{{icon.icon}}" /></li>
+												{% endif %}		
+											{% endif %}	
+										{% endif %}
+									{% endfor %}
+								</ul>
+							</div>						
+							<div class="col-lg-3">
+								<ul class="connection-btn-ul">
+									<li><a href="#"><i class="fa fa-user"></i> View Dashboard</a></li>
+									<li><a href="#" ng-click="openAddAccountPopover('Google Cloud', '{{account.username}}', '{{account.display_name}}')" ><i class="fa fa-pencil"></i> Update Credentials</a></li>
+									<li><a href="#" ng-click="openDeleteAccountConfirmPopover('Google Cloud', '{{account.username}}')"><i class="fa fa-trash-o"></i> Remove Account</a></li>
+								</ul>
+							</div>
+							
+						</div>
+					{% endif %}
+				{% endfor %}
+				
+				{% for account in itunes_accounts %}
+					{% if account.external_service == 'iTunes Connect' %}
+						<div class="row wrapper wrapper-content connection-panel gray-bg border-bottom">	
+							<div class="col-lg-1 text-center">
+								<div class="ibox float-e-margins">
+									<img alt="image" class="" src="{{ STATIC_URL }}img/apple.png" />
+								</div>
+							</div>	
+							<div class="col-lg-4">
+								<h3>My Itunes Account</h3>
+								<ul class="connection-acc-ul">
+									<li><label>Email</label> <span>{{account.username}}</span></li>
+									<li><label>Status</label> <span class="green-color-text">Connected!</span></li>
+									<li><label>Latest Report</label> <span>{{account.latest_report|date:"M d, Y" }}</span></li>
+									<li><label>Created Time</label> <span>{{account.latest_report|date:"M d, Y" }}</span></li>
+								</ul>
+							</div>
+							<div class="col-lg-4">
+								<h3>&nbsp;</h3>
+								<ul class="app-count-ul">
+									<li><label>App count:</label> <span class="app-counts">{{account.app_count}}</span></li>
+								</ul>
+								<ul class="app-imgs-ul">
+									{% for icon in account.icon %}
+										{% if forloop.counter <= 20 %}
+											{% if icon.icon|slice:"2" == 'ht' %}
+												{% if forloop.counter == 20 %}
+													<li>...</li>
+												{% else %}
+													<li><img alt="image" class="" src="{{ icon.icon}}" /></li>
+												{% endif %}
+											{% else %}
+												{% if forloop.counter == 20 %}
+													<li>...</li>
+												{% else %}
+													<li><img alt="image" class="" src="//{{icon.icon}}" /></li>
+												{% endif %}
+											{% endif %}	
+										{% endif %}
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="col-lg-3">
+								<ul class="connection-btn-ul">
+									<li><a href=""><i class="fa fa-user"></i> View Dashboard</a></li>
+									<li><a href="#" ng-click="openAddAccountPopover('iTunes Connect', '{{account.username}}', '{{account.display_name}}')"><i class="fa fa-pencil"></i> Update Credentials</a></li>
+									<li><a href="#" ng-click="openDeleteAccountConfirmPopover('iTunes Connect', '{{account.username}}')"><i class="fa fa-trash-o"></i> Remove Account</a></li>
+								</ul>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+			    <div class="row wrapper wrapper-content connection-panel gray-bg border-bottom">	
+					<div style="text-align:center;padding:50px;"> 
+						You have no connected accounts connect an account
+					</div>
+				</div>
+			
+			{% endif %}
+
+			{% include 'ad_revenues/platforms-main.html' %}
+
+			
+		</div>
+	</div>
+{% endblock %}

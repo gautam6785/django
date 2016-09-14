@@ -1,0 +1,40 @@
+{% if platform_apps %} 
+
+<table class="table table-striped">
+    {% for app in platform_apps %}
+    <tr>
+        <td>{{app.name}} - {{app.platform}}</td>
+        <td>
+            {% if app.linked %}
+            
+                {{ app.linked }}
+                
+                <a href="/ad-revenues/delete-connection/{{platform.platform}}/{{app.id}}/" 
+                                    class="btn btn-danger pull-right"> Unlink </a>
+            
+            {% else %}
+            
+             <form action="/ad-revenues/connect-app/{{platform.platform}}/{{app.id}}/" method="post"> 
+                {% csrf_token %} 
+                <select value="Select App" name="app_id">
+                
+                    {% for local_app in Apps %}
+                    <option value="{{local_app.app_info_id}}">{{local_app.platform}} - {{local_app.name}}</option>
+                    {% endfor %}
+                    
+                </select>
+                <input class="btn btn-primary pull-right" type="submit" value="Connect">
+            </form>
+
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+    
+    Coul'd not find any apps for platform: {{platform.platform}}
+    
+{% endif %}
+

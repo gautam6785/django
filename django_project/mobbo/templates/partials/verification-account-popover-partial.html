@@ -1,0 +1,44 @@
+<script type="text/ng-template" id="verification_account_popover.html">
+    <div ng-controller="AccountController" type="primary">
+		<div class="location-verify">
+			<div class="lv-top-bar">
+				<span style="line-height: 4em;">Google Play Verification</span>
+				<div ng-click="cancel()" class="x-button common-button common-button-normal common-button-clear common-button-clear-normal common-button-nolabel" unselectable="on">
+					<div class="common-button-icon common-button-icon-x"></div>
+				</div>
+			</div>
+			<div class="lv-content">
+				<div class="lv-message-box" style="display: block;">
+					    <div class="lv-message-title">Verification</div>
+
+					    <div class="spinner" ng-hide="!loadingAccount">
+							  <h2>Authenticating with {%verbatim%}{{salesPlatform}}{%endverbatim%}</h2>
+							  <div class="rect1"></div>
+							  <div class="rect2"></div>
+							  <div class="rect3"></div>
+							  <div class="rect4"></div>
+							  <div class="rect5"></div>
+						</div>
+					    <form ng-submit='verficationAccount()' ng-hide="loadingAccount">
+							{% csrf_token %}
+							<div class="lv-message-body">
+								<input class="form-control floating-label" type="text"  ng-model="verficationAccount.smscode" name="smscode" required placeholder="Enter 6 digit code"/>
+							</div>
+							<div style="margin-top: 20px">
+							    <input class="btn btn-primary" type="submit" value="Verifiy Account"/>
+							</div>
+							 <div class="alert alert-success" role="alert" ng-if="accountSyncMessage">
+								<span class="sr-only">Success:</span>
+								{% verbatim %}{{accountSyncMessage}}{% endverbatim %}
+							  </div>
+							  <div class="alert alert-danger" role="alert" ng-if="accountSyncError">
+								<span class="glyphicon glyphicon-exclamation-sign"></span>
+								<span class="sr-only">Error:</span>
+								{% verbatim %}{{accountSyncError}}{% endverbatim %}
+							  </div>
+						</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

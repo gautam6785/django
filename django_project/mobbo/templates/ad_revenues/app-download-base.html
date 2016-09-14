@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %} {% endblock %}</title>
+    {% include "partials/main-header.html" %}
+  </head>
+
+  <body class="pace-done app-details"  ng-app='theta' ng-controller='AppDownloadGraphController'>
+    {% block content %} {% endblock %}
+    
+  	{% block body_js %}
+	  {% block js_content %} {% endblock %}  
+	  {% include "ad_revenues/main-js-includes.html" %}
+	  {% include "partials/country-popover-partial.html" %}
+	<script src="  {{ STATIC_URL }}js/ad_revenues/GraphDataService.js"></script>
+    <script src="  {{ STATIC_URL }}js/AppInfoService.js"></script>
+    <script src="/static/js/AccountController.js"></script>
+	{% endblock %}
+  </body>
+
+</html>

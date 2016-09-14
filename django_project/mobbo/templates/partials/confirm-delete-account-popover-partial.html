@@ -1,0 +1,17 @@
+<script type="text/ng-template" id="confirm_delete_account_popover.html">
+	<div class="inmodal app-modal">
+		<div class="modal-header">
+			<button type="button" ng-click="cancel()" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title text-left">Confirm Disconnect</h4>
+			<div class="modal-body">
+				<p>Are you sure you want to disconnect this account?</p>
+			</div>
+			<div class="modal-footer">
+				<form ng-submit='deleteAccount()'>
+					{% csrf_token %}
+					<input class="btn btn-primary" style="width:100%" type="submit" value="Disconnect"  />
+				</form>
+			</div>
+		</div>
+	</div>
+</script>

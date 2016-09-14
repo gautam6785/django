@@ -1,0 +1,46 @@
+<script type="text/ng-template" id="add_account_popover.html">
+	<div class="signup-header">
+    <span class="navbar-brand" style="font-size:1.5em;margin-top:15px;margin-left:10px" href="/">Mobbo Dashboard</span>
+    <a ng-click="cancel()" style="float:right" class="cancel-button">
+      <i class="fa fa-times-circle"></i>
+    </a>
+    <div style="clear:both"></div>
+  </div>
+
+  <div class="modal-body signup-form">
+    <div class="spinner" ng-hide="!loadingAccount">
+      <h2>Authenticating with {%verbatim%}{{salesPlatform}}{%endverbatim%}</h2>
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+    <form ng-submit='addAccount()' ng-hide="loadingAccount">
+      {% csrf_token %}
+      <h3 style="margin-bottom:20px"><img style="height:24px;margin-right:10px;margin-top:-5px" ng-src={%verbatim%}{{platformIconURL}} />{{salesPlatform}}</h3>{%endverbatim%}
+      <input class="form-control floating-label" type="text" ng-model="username" name="Name" required placeholder="Username"/>
+      <br />
+      <input class="form-control floating-label" type="password" ng-model="password" name="Password" required placeholder="Password" />
+      <BR  />
+      <input class="btn btn-primary" type="submit" value="Update Account" ng-if="isUpdate" />
+      <input class="btn btn-primary" type="submit" value="Connect Account" ng-if="!isUpdate" />
+      <div class="alert alert-success" role="alert" ng-if="accountSyncMessage">
+        <span class="sr-only">Success:</span>
+        {% verbatim %}{{accountSyncMessage}}{% endverbatim %}
+      </div>
+      <div class="alert alert-danger" role="alert" ng-if="accountSyncError">
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
+        <span class="sr-only">Error:</span>
+        {% verbatim %}{{accountSyncError}}{% endverbatim %}
+      </div>
+
+    </form>
+  </div>
+
+    <div class="modal-footer" style="font-size:.9em">
+        <div class="info-box shadow-z-1" style="padding:10px;background-color:white">
+        <div style="float:left;margin-right:10px;padding-top:7px"> <i class="fa fa-lock"></i></div><p style="text-align:left">Your credentials are encrypted and used <b>only</b> for retrieving reports. </p> 
+        <p ng-if="salesPlatform=='iTunes Connect'" style="text-align:left">To limit access, you can also <a href="/help/create_itunesconnect_sales_account">create a sales-reporting role in iTunesConnect</a>.</p>
+    </div>
+</script>

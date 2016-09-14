@@ -1,0 +1,200 @@
+{% extends "dashboard/app-download-base.html" %}
+{% block title %}{{app_info.name}} - App Store Download{% endblock %}
+{% block head %}
+ App Details
+{% endblock %}
+{% block content %}
+
+{% load staticfiles %}
+	
+<div id="wrapper">		
+		<div class="top_header">
+			{% include "partials/top-header.html" %}
+		</div>
+		{% include "partials/app-navigation.html" %}
+		
+		<div id="page-wrapper" class="gray-bg dashbard-1">
+			<div class="row border-bottom padding-10">
+			
+			<!--
+				<div class="col-lg-12">
+					<div class="app-info-top aa-info-columns aa-info-columns-app">
+						<div class="name">
+							<h2 class="asset-name">{{app_info.name}}</h2>
+							<label class="asset-type">[App]</label>
+							<div class="aa-sharing-link"></div>
+						</div>
+						
+						<div class="row-control-group clearfix summary-container">
+							<div class="left-align-controls summary">
+								<div class="summary-item">
+									<label>Store</label>
+									<div class="value">
+										{% if app_info.platform_type_id == 2 %}
+											<a target="_blank" href="https://play.google.com/store/apps/details?id={{app_info.app}}" title="{{app_info.platform}}" class="summary-item-text">{{app_info.platform}}</a>
+									    {% else %}
+											<a target="_blank" href="https://itunes.apple.com/app/id{{app_info.identifier}}" title="{{app_info.platform}}" class="summary-item-text">{{app_info.platform}}</a>
+									    {% endif %}
+										<i class="fa fa-external-link"></i>
+									</div>
+								</div>
+								
+								<div class="summary-item">
+									<label>Price</label>
+									{% if app_info.price == None %}
+										<div class="value">
+											Free
+										</div>
+									{% else %}
+									    <div class="value">
+											{{ app_info.price|floatformat:2}} USD
+										</div>
+									{% endif %}
+								</div>
+								<div class="summary-item">
+									<label>Publisher</label>
+									<div class="value">
+										<a href="#" title="{{app_info.developer}}" class="summary-item-text">{{app_info.developer}}</a>
+									</div>
+								</div>
+								<!--<div class="summary-item">
+									<label data-toggle="tooltip" title="A consistent name for grouping an app's different versions within and across stores. The data is maintained by and is property of App Annie.">Unified App</label>
+									<div class="value">
+										<label data-toggle="tooltip" title="Data is not yet available">N/A</label>
+									</div>
+								</div>
+								<div class="summary-item">
+									<label data-toggle="tooltip" title="A collection of apps sharing the same intellectual property, similar to movie franchise. The data is maintained by and is property of App Annie.">App Franchise</label>
+									<div class="value">
+										<label data-toggle="tooltip" title="Data is not yet available">N/A</label>
+									</div>
+								</div>-->
+								<!--
+							</div>
+							<div class="right-align-controls"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			-->
+			
+			<div class="row">
+				<div class="col-sm-12">				
+					<div class="info-box shadow-z-1 application" style="padding:20px;background-color:white;margin-bottom:20px;float:left;width:100%">
+							<h3 style="margin-top:0" class="application">App Store Download stats</h3> 
+							<div class='application' style="margin-top:6px" ng-if="graphData.dataLoaded">		
+								{% include 'partials/date-selector-partial.html' %}
+							</div>
+							<a class="application category-picker ng-cloak" ng-click="openCountryPopover('lg')">
+									{% verbatim %}	{{selectedCountry}}{% endverbatim %}
+									&nbsp;<span class="caret"></span>
+							</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			{% verbatim %}
+			<div class="row border-bottom padding-10">
+				<div class="col-lg-12">
+						<div ng-if="!graphData.dataLoaded" >
+							<div class="ibox ">
+								<div class="ibox-content">
+									<div class="spiner-example">
+										<h3 style="text-align:center;padding:0;margin:0">App Download stats loading. </h3>
+										<div class="sk-spinner sk-spinner-wave">
+											<div class="sk-rect1"></div>
+											<div class="sk-rect2"></div>
+											<div class="sk-rect3"></div>
+											<div class="sk-rect4"></div>
+											<div class="sk-rect5"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> 
+
+						<div ng-if="graphData.raw_data.downloadData.length && graphData.dataLoaded">
+							<div class="ibox ">
+								<div class="ibox-content">
+									<nvd3 options='graphData.graphs.options' data='graphData.graphs.data'></nvd3>
+                                                                        {% endverbatim %} {% include "partials/mobbo-watermark-div.html" %} {% verbatim %}
+									<div class="row-fluid">
+										<div class="ng-cloak row" ng-if="graphData.raw_data.downloadData.length">	
+											<table class="table table-striped table-bordered table-hover app-revenue-tbl" id="editable" >
+												<thead>
+													<tr>
+														<th></th>
+														<th>Country</th>
+														<th>Download</th>
+														<th>% Download</th>
+														<th>Refunds</th>
+													</tr>
+													<tr>
+														<th><input type="checkbox" /></th>
+														<th>Total</th>
+														<th><span>{{graphData.raw_data.current_total | number}}</span> <span title="Data in the previous period: {{graphData.raw_data.previous_total}}" class="grn">{{graphData.raw_data.downloadTotalPercentage}}</span></th>
+														<th></th>
+														<th>0</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="graph in graphData.raw_data.downloadData">
+														
+														<td><input ng-disabled="!getChecked('{{graph.country_code}}') && graphData.selectedCountryCode.length >= 6" ng-checked="getChecked('{{graph.country_code}}')" type="checkbox" /></td>
+														<td>{{graph.name}}</td>
+														<td>
+															<span>{{graph.currentTotal | number}}</span> 
+															<span title="Data in the previous period: {{graph.previousTotal}}" class="{{graph.color}}">
+																{{graph.downloadPercentage}}
+															</span>
+														</td>
+														<td>
+															<div ng-if="graph.totalPercentage != 'N/A'">
+																<span>{{graph.totalPercentage}}%</span> 
+																<div class="progress">
+																	<div class="progress-bar" role="progressbar" aria-valuenow="{{graph.totalPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width:{{graph.totalPercentage}}%">
+																	  <span class="sr-only">70% Complete</span>
+																	</div>
+																</div>
+															</div>
+															<div ng-if="graph.totalPercentage == 'N/A'">
+																<span>{{graph.totalPercentage}}</span>	
+															</div>
+														</td>
+														<td>0</td>
+													</tr>
+												
+												</tbody>
+				   
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+				        </div>
+				</div>
+			</div>
+			{% endverbatim %}
+			
+			<div ng-if="!graphData.graphs.data.length && graphData.dataLoaded">
+				<div class="info-box shadow-z-1 application" style="padding:20px;background-color:white;margin-bottom:20px;float:left;width:100%">
+					No matching records found.
+				</div>
+			</div>
+			
+		</div>	
+</div>
+<noscript>
+    <style>
+        .application { display: none !important; }
+    <style>
+</noscript>
+{% endblock %}
+{% block js_content %}
+<script>
+	  // these variables are set for drilldowns, but not the main dashboard
+	  app = "{{app_info | safe}}";
+</script>
+
+{% endblock %}

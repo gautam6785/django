@@ -1,0 +1,27 @@
+<div class="row border-bottom">
+	<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+		<ul class="nav navbar-top-links navbar-right">
+			<li>
+				{% if user.is_authenticated %}
+					<span class="m-r-sm text-muted welcome-message">Welcome, {{ user.username }} </span>
+				{% else %}
+					<span class="m-r-sm text-muted welcome-message">Welcome, Guest </span>>
+			    {% endif %} 
+			</li>
+			<li>
+				{% if user.is_authenticated %}
+					<a href="/account/logout"><i class="fa fa-sign-out"></i>[logout]</a>
+				{% else %}
+					<a href="/account/login"><i class="fa fa-sign-out"></i>[login]</a>
+			    {% endif %} 
+			</li>
+			<li>
+				<a class="right-sidebar-toggle">
+					<i class="fa fa-tasks"></i>
+				</a>
+			</li>
+		</ul>
+
+	</nav>
+</div>
+		

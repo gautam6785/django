@@ -1,0 +1,41 @@
+{% include "ad_revenues/add_platform.html" %}
+
+<div class="row wrapper border-bottom white-bg connection-heading">
+        <div class="col-sm-6">
+                <h2><strong>Ad platforms</strong></h2>
+        </div>
+        <div class="col-sm-6">
+            <button class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modal_all">
+                <i class="fa fa-plus" aria-hidden="true"></i> Add Platform
+            </button>
+        </div>
+</div>
+                    
+                    
+
+<div class="row wrapper wrapper-content connection-panel gray-bg border-bottom">
+    <table class="table table-striped table-bordered table-hover ad-platform-tbl">
+        <thead>
+            <th> Connected Platfroms: </th> 
+            <th> Assets </th>
+            <th> Account Status </th>
+            <th> Action</th> 
+        </thead>
+            <tbody>
+                {% for name,data in user_platforms.items %}
+                <tr class="gradeX"> 
+                    <td><a style="border:0" href="/ad-revenues/platform_connections/{{data.name}}" >{{data.name}}</a></td>
+                    <td> {{data.assets}}</td>
+                    <td>
+                        {% if data.status == "Connected" %} <span class="success"> <i class="fa fa-check"></i> 
+                        {% else %} <span class="danger"> <i class="fa fa-exclamation-triangle"></i>
+                        {% endif %}
+                        {{data.status}}
+                        </span>
+                    </td>
+                    <td><a href="/ad-revenues/remove_platform/{{data.name}}/"> <i class="fa fa-trash-o fa-lg"></i> Delete</a>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+</div>

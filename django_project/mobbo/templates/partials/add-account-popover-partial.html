@@ -1,0 +1,61 @@
+<script type="text/ng-template" id="add_account_popover.html">
+	<div class="inmodal app-modal">		
+		<div class="modal-header">
+			<button type="button" ng-click="cancel()" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title text-left">Select the platform</h4>
+			<ul class="tabs">
+				<li><a href="#">1. Select the platform</a></li>
+				<li class="active"><a href="#">2. Configration</a></li>
+				<li><a href="#">3. It's Done</a></li>
+			</ul>
+		</div>
+		<div class="modal-body">
+			
+			<div class="spinner" ng-hide="!loadingAccount">
+				<div class="spiner-example">
+					<h3 style="text-align:center;padding:0;margin:0">Adding {%verbatim%}{{salesPlatform}}{%endverbatim%} Account</h3>
+					<div class="sk-spinner sk-spinner-wave">
+						<div class="sk-rect1"></div>
+						<div class="sk-rect2"></div>
+						<div class="sk-rect3"></div>
+						<div class="sk-rect4"></div>
+						<div class="sk-rect5"></div>
+					</div>
+				</div>
+			</div>
+			<form ng-submit='addAccount()' ng-hide="loadingAccount">
+				
+				<h3 style="margin-bottom:20px"><img style="height:24px;margin-right:10px;margin-top:-5px" ng-src={%verbatim%}{{platformIconURL}} />{{salesPlatform}}</h3>{%endverbatim%}
+				{% csrf_token %}
+				<ul class="app-acc-ul">
+					<li>
+						<label>Display name:</label><i class="fa fa-question-circle pull-right"></i>
+						<input class="form-control floating-label" type="text" ng-model="display_name" name="display_name" required placeholder="Display Name"/>
+					</li>
+					<li>
+						<label>Email:</label><i class="fa fa-question-circle pull-right"></i>
+						<input class="form-control floating-label" type="text" ng-model="username" name="Name" required placeholder="Username"/>
+					</li>
+					<li>
+						<label>Password:</label><i class="fa fa-question-circle pull-right"></i>
+						<input class="form-control floating-label" type="password" ng-model="password" name="Password" required placeholder="Password" />
+					</li>
+				</ul>
+				  
+			    <input class="btn btn-primary" type="submit" value="Update Account" ng-if="isUpdate" />
+			    <input class="btn btn-primary" type="submit" value="Connect Account" ng-if="!isUpdate" />
+				<div class="alert alert-success" role="alert" ng-if="accountSyncMessage">
+				<span class="sr-only">Success:</span>
+					{% verbatim %}{{accountSyncMessage}}{% endverbatim %}
+				</div>
+				<div class="alert alert-danger" role="alert" ng-if="accountSyncError">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<span class="sr-only">Error:</span>
+					{% verbatim %}{{accountSyncError}}{% endverbatim %}
+				</div>
+			</form>
+			<br/>
+			<p>By adding your account, you acknowledge that you have read and agree to the Analytics Terms of the service.</p>
+		</div>
+    </div>
+</script>

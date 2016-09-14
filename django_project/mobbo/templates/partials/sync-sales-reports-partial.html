@@ -1,0 +1,54 @@
+<table class="table table-striped table-bordered table-sync">
+	<tbody>
+		<tr>
+		  <td>
+			<img src="/static/img/apple-bite.png" style="height:48px" />
+		  </td>
+		  <td style="vertical-align:middle">
+			  <h4>Add an iTunes Account</h4>
+		  </td>
+		  <td>
+			  <a title="Add an iTunesConnect Account" ng-click="openAddAccountPopover('iTunes Connect')" class="btn btn-primary btn-fab btn-raised mdi-content-add"></a>
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+			<img src="/static/img/android.png" style="height:48px" />
+		  </td>
+		  <td style="vertical-align:middle">
+			  <h4>Add a Google Play Account</h4>
+		  </td>
+		  <td>
+			  <a title="Add a Google Account" ng-click="openAddAccountPopover('Google Cloud')" class="btn btn-primary btn-fab btn-raised mdi-content-add"></a>
+		  </td>
+		</tr>
+	</tbody>
+</table>
+
+
+{% if itunes_accounts.0 or google_play_accounts.0 %}
+  <table class="table table-striped">
+  <tbody>    			  	
+  {% for account in itunes_accounts %}
+	{% if account.external_service == 'iTunes Connect' %}
+	  <tr>
+		<td><img src="/static/img/apple-bite.png" style="height:24px" /></td>
+		<td>{{account.username}}</td>
+		<td style="text-align:right;font-size:20px"><a ng-click="openDeleteAccountConfirmPopover('iTunes Connect', '{{account.username}}')"><i style="color:orange" class="mdi-content-remove-circle"></i></a></td>
+		<td style="text-align:right;font-size:20px"><a ng-click="openAddAccountPopover('iTunes Connect', '{{account.username}}')"><i style="color:#12a2b7" class="mdi-content-create"></a></td>
+	  </tr>
+	{% endif %}
+  {% endfor %}
+  {% for account in google_play_accounts %}
+	{% if account.external_service == 'Google Cloud' %}
+	  <tr>
+		<td><img src="/static/img/android.png" style="height:24px" /></td>
+		<td>{{account.username}}</td>
+		<td style="text-align:right;font-size:20px"><a ng-click="openDeleteAccountConfirmPopover('Google Cloud', '{{account.username}}')"><i style="color:orange" class="mdi-content-remove-circle"></i></a></td>
+		<td style="text-align:right;font-size:20px"><a ng-click="openAddAccountPopover('Google Cloud', '{{account.username}}')"><i style="color:#12a2b7" class="mdi-content-create"></a></td>
+	  </tr>
+	{% endif %}
+  {% endfor %}
+  </tbody>
+  </table>
+{% endif %}

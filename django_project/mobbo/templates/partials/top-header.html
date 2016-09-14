@@ -1,0 +1,254 @@
+<div class="logo-area">
+	<a href="/" class="app-logo"><img alt="App Logo" src="{{ STATIC_URL }}img/logo-2.png"></a>
+</div>
+<div id="header-wrapper" class="gray-bg dashbard-1">
+	<div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <!--<div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            </div> -->
+            <ul class="nav navbar-top-links navbar-left">
+                    <li><a href="/dashboard"> <i class="fa fa-tachometer" aria-hidden="true"></i> <strong>Dashboard</strong> </a></li>
+                    <li><a href="/dashboard/apps"> <i class="fa fa-mobile" aria-hidden="true"></i> <strong>Apps</strong> </a></li>
+
+<!--                     <li><a href="javascript:void(0);"><i class="fa fa-link"></i> Connection</a></li> -->
+<!--                     <li><a href="javascript:void(0);"><i class="fa fa-envelope"></i> Support</a></li> -->
+            </ul>
+            <ul class="nav navbar-top-links navbar-right">
+                <!--<li>
+                    <span class="m-r-sm text-muted welcome-message">Language</span>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="{{ STATIC_URL }}img/a7.jpg">
+                                </a>
+                                <div class="media-body">
+                                    <small class="pull-right">46h ago</small>
+                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="{{ STATIC_URL }}img/a4.jpg">
+                                </a>
+                                <div class="media-body ">
+                                    <small class="pull-right text-navy">5h ago</small>
+                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="{{ STATIC_URL }}img/profile.jpg">
+                                </a>
+                                <div class="media-body ">
+                                    <small class="pull-right">23h ago</small>
+                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="text-center link-block">
+                                <a href="mailbox.html">
+                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="mailbox.html">
+                                <div>
+                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="profile.html">
+                                <div>
+                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                    <span class="pull-right text-muted small">12 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="grid_options.html">
+                                <div>
+                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="text-center link-block">
+                                <a href="notifications.html">
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>-->
+
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="/accounts/logout"><i class="fa fa-sign-out"></i> Log out</a>
+                    {% else %}
+                        <a href="/accounts/login"><i class="fa fa-sign-in"></i> Log in</a>
+                    {% endif %}
+                    
+                </li>
+                <li>
+                    <a class="right-sidebar-toggle">
+                        <i class="fa fa-tasks"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+	</div>
+</div>
+<!--<div class="visible-xs col-xs-12 mobTop">
+	<div class="searchMob">
+		<form>
+			<div class="input-group">
+			  <span class="input-group-btn">
+				<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+			  </span>
+			  <input type="text" class="form-control" placeholder="Search for...">
+			</div>
+		</form>
+	</div>
+	<div class="logOut">
+		<a href="javascript:void(0)"><i class="glyphicon glyphicon-off"></i></a>
+	</div>
+</div>
+
+<div class="app-top-header">
+	<div class="container">     
+		<div class="header-area">
+			<div class="app-logo-area">
+				<a href="/" class="app-logo">
+					<img alt="App Logo" src="{{ STATIC_URL }}img/logo.png">
+				</a>
+			</div>		
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar"><i class="fa fa-reorder"></i></button>
+		</div>
+		
+		<div id="navbar" class="mobilNav navbar-collapse collapse" aria-expanded="true">
+			<ul class="app-top-nav pull-left">
+				<li class="nav-item">
+					<a class="aa-nav-toggle" onclick="return false;" href="#subnav-market-data">Market Data</a>
+				</li>
+				<li class="nav-item">
+					<a class="aa-nav-toggle" onclick="return false;" href="#subnav-analytics">Analytics</a>
+				</li>
+				<li class="nav-item">
+					<a class="aa-nav-link" href="/indexes/all-stores/report/">Insights</a>
+				</li>
+			</ul>
+		
+			<div class="pull-right right-nav">
+				<ul class="app-rgt-nav pull-left">
+					<li class="nav-item">
+						<a class="aa-nav-toggle" onclick="return false;" href="#subnav-tours">Tours</a>
+					</li>
+					<li class="nav-item">
+						<a class="aa-nav-link" href="#">Pricing</a>
+					</li>
+					<li class="nav-item">
+						<a class="aa-nav-toggle" onclick="return false;" href="#subnav-about">About</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="aa-nav-link" href="#">Blog</a>
+					</li>
+					<li class="nav-item hide">
+						<a class="aa-nav-link" href="#" target="_blank">Support</a>
+					</li>
+				</ul>
+
+				<div class="app-search-box pull-left">
+					<form name="search" action="/search/">
+					<ul class="search-box">
+						<li class="dropdown selector">
+							<span data-toggle="dropdown" role="button" class="dropdown-toggle"><span data-value="apps">Apps</span> <i class="fa fa-caret-up"></i><i class="fa fa-caret-down"></i></span>
+							<ul role="menu" class="dropdown-menu">
+								<li data-label="" data-market="" data-vertical="" data-value="" data-placeholder="" role="presentation">
+									<a href="#" role="menuitem">
+										
+										<i class="icon-aa-check"></i>
+									</a>
+								</li>
+							</ul>
+							<input type="hidden" value="apps" name="vertical">
+						</li>
+						<li>
+							<input value="" placeholder="App or Publisher" class="search-box-input" name="q">
+						</li>
+						<li class="search-icon"><i class="icon-search fa fa-search"></i></li>
+					</ul>
+					</form>
+				</div>
+
+				<ul class="app-user-nav pull-left">
+					<li class="nav-item dropdown nav-item-user-prefs">
+						
+						{% if user.is_authenticated %}
+						    <a aria-expanded="false" role="button" data-toggle="dropdown" class="aa-user-prefs-toggle dropdown-toggle" href="#">
+								<span class="user-display-name">{{user.first_name}} {{user.last_name}}</span>
+								<i class="fa fa-caret-up"></i><i class="fa fa-caret-down"></i>
+						    </a>
+							<ul role="menu" class="dropdown-menu pull-right">
+								<li class="user-email">{{user.email}}</li>
+								<li class="head head-for-analytics"><i class="icon-aa-bullet-filled"></i>
+									Analytics &amp; Advertising
+								</li>
+								<li><a href="/dashboard">Connections</a></li>
+								<li><a href="/dashboard/apps">Apps</a></li>
+								<li><a href="#">Sharing</a></li>
+								<li><a href="#">Backup Data</a></li>
+								<li class="head head-for-account"><i class="icon-aa-bullet-filled"></i>
+									Mobbo Dashboard Account
+								</li>
+								<li><a href="#">Teams</a></li>
+								<li><a href="#">User Settings</a></li>
+								<li><a href="#">API Key</a></li>
+								<li class="spacer"></li>
+								<li class="support"><a href="#" target="_blank">Support</a></li>
+								<li class="logout"><a href="/account/logout/">Log Out</a></li>
+							</ul>					
+						{% else %}
+							<a href="account/login"><i class="fa fa-sign-in"></i> Log in</a></p>
+						{% endif %}					
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+ </div>
+<!--  -->

@@ -1,0 +1,370 @@
+import logging
+import json
+import requests
+import csv
+import os
+import glob
+
+from appinfo import fetcher
+from django.http import HttpResponse
+from django.shortcuts import render
+from customers.models import Customer, CustomerExternalLoginInfo
+from django.shortcuts import render_to_response
+
+from core.timeutils import from_timestamp, utc_epoch
+from datetime import date, datetime, time, timedelta
+from pytz import timezone, utc
+from re import match
+from dateutil import parser
+from base64 import b64encode
+from boto import connect_gs, storage_uri
+from boto.exception import InvalidUriError
+from core.currency import convert_decimal_to_usd
+from core.db.constants import TEN_PLACES
+from core.oauth import scriber_gcs_boto_plugin
+from core.oauth.constants import GSUTIL_CLIENT_ID, GSUTIL_CLIENT_NOTSOSECRET
+from decimal import Decimal
+from django.db import transaction
+from metrics.models import GoogleReportRecord
+#from metrics.salesreports import ReportUnavailableException
+from os import urandom
+from pytz import utc
+from re import match
+from StringIO import StringIO
+from zipfile import ZipFile
+from django.conf import settings
+
+_GOOGLE_DEVELOPER_REVENUE_SHARE = Decimal('0.7')
+_GOOGLE_REPORT_BUCKET_BASE = "gs://pubsite_prod_rev_"
+_GOOGLE_REPORT_TYPES = ['earnings', 'installs', 'payouts', 'sales']
+_GOOGLE_INSTALLATION_REPORT_EXPECTED_FIELDS = [
+  'Date',                     # 0
+  'Package Name',             # 1
+  'Current Device Installs',  # 2
+  'Daily Device Installs',    # 3
+  'Daily Device Uninstalls',  # 4
+  'Daily Device Upgrades',    # 5
+  'Current User Installs',    # 6
+  'Total User Installs',      # 7
+  'Daily User Installs',      # 8
+  'Daily User Uninstalls'     # 9
+]
+_GOOGLE_SALES_REPORT_EXPECTED_FIELDS = [
+  'Order Number',             #  0
+  'Order Charged Date',       #  1
+  'Order Charged Timestamp',  #  2
+  'Financial Status',         #  3
+  'Device Model',             #  4
+  'Product Title',            #  5
+  'Product ID',               #  6
+  'Product Type',             #  7
+  'SKU ID',                   #  8
+  'Currency of Sale',         #  9
+  'Item Price',               # 10
+  'Taxes Collected',          # 11
+  'Charged Amount',           # 12
+  'City of Buyer',            # 13
+  'State of Buyer',           # 14
+  'Postal Code of Buyer',     # 15
+  'Country of Buyer',         # 16
+]
+scriber_gcs_boto_plugin.SetAuthInfo(None, GSUTIL_CLIENT_ID, GSUTIL_CLIENT_NOTSOSECRET)
+logger = logging.getLogger(__name__)
+
+
+class GoogleSalesReportProcessor(object):
+  def process(self, report_location, start_date, end_date, reportFileName, customerId, login_info_id):
+    compressedData = StringIO()
+    location = '"gs://pubsite_prod_rev_16698774070443600097/sales/'
+    
+    GOOGLE_STORAGE = 'gs'
+    base_bucket_name = 'pubsite_prod_rev_16698774070443600097'
+    userid = 'sales'
+    
+    reportLocation = '/'.join([_GOOGLE_REPORT_BUCKET_BASE + '16698774070443600097/' + 'sales'])
+    src_uri = storage_uri(reportLocation)
+    
+    for key in src_uri.list_bucket("sales"):
+        print key.name
+    #bucket_uri = storage_uri(base_bucket_name, GOOGLE_STORAGE)
+    #for object_uri in bucket_uri.list_bucket(prefix='/%s' % userid, delimiter='/'):
+        #print object_uri
+    """
+    testlocation = '/home/ourdesignz/zip/salesreport_201512.zip'
+    
+    # Unavailable monthly report files will manifest as InvalidUriErrors.
+    try:
+      storageUri = storage_uri(report_location)
+      storageUri.connection = connect_gs()
+      storageUri.get_contents_to_stream(compressedData)
+    except InvalidUriError as e:
+      raise ReportUnavailableException('Report not yet available: %s' % e.message)
+
+    zipData = ZipFile(compressedData)
+  
+    # We expect exactly one file in the archive.
+    zipFilename = zipData.namelist()[0]
+    """
+    """
+    archive = ZipFile(testlocation, 'r')
+    zipFilename1 = archive.namelist()[0]
+    print zipFilename1
+    """
+    """
+    dest_dir = settings.GOOGLE_PLAY_UPLOAD_FOLDER+'/sales/'+str(customerId.customer_id)+'/'+str(login_info_id)
+    local_dst_uri = storage_uri(os.path.join(dest_dir, reportFileName),'file')
+    object_contents = StringIO()
+    src_uri = storage_uri(report_location)
+    src_uri.get_key().get_file(object_contents)
+    object_contents.seek(0)
+    local_dst_uri.new_key().set_contents_from_file(object_contents)
+    object_contents.close()
+    
+    print dest_dir
+    
+    salesReportFile = zipData.open(zipFilename)
+    reader = csv.reader(salesReportFile.readlines(), delimiter=',')
+    records = []
+    for i, row in enumerate(reader):
+      if i == 0:
+        if _GOOGLE_SALES_REPORT_EXPECTED_FIELDS != row[:len(_GOOGLE_SALES_REPORT_EXPECTED_FIELDS)]:
+          logger.warning('Encountered unexpected google report fields: %s' % row)
+          break
+      else:
+        chargedDate = parser.parse(row[1]).date()
+        if not(start_date <= chargedDate <= end_date):
+          continue
+
+        orderNumber = row[0]
+        chargedTime = from_timestamp(long(row[2]), utc)
+        financialStatus = row[3]
+        deviceModel = row[4]
+        productTitle = row[5]
+        productId = row[6]
+        productType = row[7]
+        skuId = row[8]
+        saleCurrency = row[9]
+        itemPrice = _parse_decimal(row[10])
+        taxes = _parse_decimal(row[11])
+        chargedAmt = _parse_decimal(row[12])
+        buyerCity = row[13]
+        buyerState = row[14]
+        buyerPostalCode = row[15]
+        buyerCountry = row[16]
+
+        paymentDirection = -1 if (financialStatus == 'Refund' or chargedAmt < 0) else 1
+        developerProceeds = paymentDirection * itemPrice * _GOOGLE_DEVELOPER_REVENUE_SHARE
+        developerProceedsUsd = convert_decimal_to_usd(developerProceeds,
+            saleCurrency).quantize(TEN_PLACES)
+        records.append(GoogleReportRecord(
+            order_number=orderNumber, charged_date=chargedDate, charged_time=chargedTime,
+            financial_status=financialStatus, device_model=deviceModel, product_title=productTitle,
+            product_id=productId, product_type=productType, sku_id=skuId,
+            sale_currency=saleCurrency, item_price=itemPrice, taxes=taxes,
+            charged_amount=chargedAmt, developer_proceeds=developerProceeds,
+            developer_proceeds_usd=developerProceedsUsd, buyer_city=buyerCity,
+            buyer_state=buyerState, buyer_postal_code=buyerPostalCode, buyer_country=buyerCountry))
+
+    return records
+    """
+
+class GoogleInstallationReportProcessor(object):
+  def process(self, report_location, start_date, end_date):
+    # Unavailable monthly report files will manifest as InvalidUriErrors.
+    try:
+      storageUri = storage_uri(report_location)
+      storageUri.connection = connect_gs()
+      report = storageUri.get_contents_as_string().decode('utf-16')
+    except InvalidUriError as e:
+      raise ReportUnavailableException('Report not yet available: %s' % e.message)
+
+    reader = csv.reader(report.splitlines(), delimiter=',')
+    records = []
+    for i, row in enumerate(reader):
+      if i == 0:
+        if _GOOGLE_INSTALLATION_REPORT_EXPECTED_FIELDS != \
+            row[:len(_GOOGLE_INSTALLATION_REPORT_EXPECTED_FIELDS)]:
+          logger.warning('Encountered unexpected google report fields: %s' % row)
+          break
+      else:
+        recordDate = parser.parse(row[0]).date()
+        if not(start_date <= recordDate <= end_date):
+          continue
+
+        packageName = row[1]
+        currentDeviceInstalls = int(row[2])
+        dailyDeviceInstalls = int(row[3])
+        dailyDeviceUninstalls = int(row[4])
+        dailyDeviceUpgrades = int(row[5])
+        currentUserInstalls = int(row[6])
+        totalUserInstalls = int(row[7])
+        dailyUserInstalls = int(row[8])
+        dailyUserUninstalls = int(row[9])
+
+        records.append(GoogleInstallationReportRecord(
+            date=recordDate, package_name=packageName,
+            current_device_installs=currentDeviceInstalls,
+            daily_device_installs=dailyDeviceInstalls,
+            daily_device_uninstalls=dailyDeviceUninstalls,
+            daily_device_upgrades=dailyDeviceUpgrades,
+            current_user_installs=currentUserInstalls,
+            total_user_installs=totalUserInstalls,
+            daily_user_installs=dailyUserInstalls,
+            daily_user_uninstalls=dailyUserUninstalls))
+
+    return records
+
+
+GOOGLE_SALES_REPORT_PROCESSOR = GoogleSalesReportProcessor()
+GOOGLE_INSTALLATION_REPORT_PROCESSOR = GoogleInstallationReportProcessor()
+
+GOOGLE_REPORT_TYPE_TO_PROCESSOR_MAP = {
+  'installs': GOOGLE_INSTALLATION_REPORT_PROCESSOR,
+  'sales': GOOGLE_SALES_REPORT_PROCESSOR,
+}
+
+def _parse_decimal(value_str):
+  decimalStr = value_str.replace(',', '')
+  return Decimal(decimalStr)
+
+# Create your views here.
+def reports(request):
+	login_info_id = 1
+	loginInfo = CustomerExternalLoginInfo.objects.get(pk=login_info_id)
+	
+	refresh_token = loginInfo.refresh_token
+	bucket_id = loginInfo.gc_bucket_id
+	report_type = 'sales'
+	customerId = loginInfo.customer_id
+	
+	scriber_gcs_boto_plugin.SetAuthInfo(refresh_token)
+	reportFolder = _report_folder(report_type)
+	
+	LOCAL_PATH = '/'.join([settings.GOOGLE_PLAY_UPLOAD_FOLDER, reportFolder, str(customerId.customer_id), str(login_info_id)])
+	reportLocation = '/'.join([_GOOGLE_REPORT_BUCKET_BASE + bucket_id])
+	
+	src_uri = storage_uri(reportLocation)
+    
+    #Creates a local folder if not already exists
+    
+	if not os.path.exists(LOCAL_PATH):
+		os.makedirs(LOCAL_PATH) 
+	for key in src_uri.list_bucket(reportFolder):
+		key_name = key.name
+		
+		# Get the filename
+		filename = key_name.split('/')[-1]
+		key.get_contents_to_filename(LOCAL_PATH+'/'+filename)
+	
+	return HttpResponse({LOCAL_PATH})
+	#return render_to_response('download/report.html',{'loginInfos':loginInfo,'records':records})
+	#return HttpResponse(json.dumps({"message":"test message"}),
+				#content_type='application/json')
+				
+def get_app_info(request):
+	
+	loginId = 1
+	login = CustomerExternalLoginInfo.objects.get(pk=loginId)
+	customer = login.customer_id
+	#customer = Customer.objects.get(pk=int(loginInfo.customer_id))
+	report_type = 'sales'
+	reportFolder = _report_folder(report_type)
+	
+	LOCAL_PATH = '/'.join([settings.GOOGLE_PLAY_UPLOAD_FOLDER, reportFolder, str(customer.customer_id), str(loginId)])
+	
+	filesnames = glob.glob(LOCAL_PATH+"/*.zip")
+	records= []
+	package_name = []
+	
+	for reportlocation in filesnames:
+		#reportlocation = LOCAL_PATH+'/salesreport_201512.zip'
+		zipData = ZipFile(reportlocation, 'r')
+		
+		# We expect exactly one file in the archive.
+		zipFilename = zipData.namelist()[0]
+		salesReportFile = zipData.open(zipFilename)
+		
+		reader = csv.reader(salesReportFile.readlines(), delimiter=',')
+		
+		for i, row in enumerate(reader):
+			copied_s = {}
+			if i == 0:
+				if _GOOGLE_SALES_REPORT_EXPECTED_FIELDS != row[:len(_GOOGLE_SALES_REPORT_EXPECTED_FIELDS)]:
+					logger.warning('Encountered unexpected google report fields: %s' % row)
+					break
+			else:
+				copied_s['charged_date'] = parser.parse(row[1]).date()
+				copied_s['order_number'] = row[0]
+				copied_s['product_id'] = row[6]
+				copied_s['title'] = row[5]
+				copied_s['price'] = row[10]
+				copied_s['currency_of_sale'] = row[9]
+				if row[6] not in package_name:
+					package_name.append(row[6])
+					records.append(copied_s)
+    
+	for record in records:
+		productId = record['product_id']
+		title = record['title']
+		appInfo = fetcher.ANDROID_APP_INFO_FETCHER.fetch(productId,title,login,customer)
+	#print records
+	return HttpResponse({LOCAL_PATH})
+	#files = glob.glob(LOCAL_PATH+"/*.zip")
+	#return render_to_response('download/appinfo.html',{'records':records,'files':files})
+	
+				
+def fetch_google_report(refresh_token, bucket_id, report_type, start_date, end_date):
+	
+    if report_type not in _GOOGLE_REPORT_TYPES:
+        raise ValueError('Unrecognized report type %s' % report_type)
+    elif report_type not in ['installs', 'sales']:
+        raise NotImplementedError('No report fetching enabled for report type %s' % report_type)
+    
+	records = []
+
+	scriber_gcs_boto_plugin.SetAuthInfo(refresh_token)
+    
+	return records
+
+def _report_file_names(bucket_id, report_type, start_date, end_date):
+  if report_type not in _GOOGLE_REPORT_TYPES:
+    raise ValueError('Unrecognized report type %s' % report_type)
+  elif report_type in ['payoouts', 'sales']:
+    months = {}
+    reportDate = start_date
+    while reportDate <= end_date:
+      months[reportDate.strftime('%Y%m')] = None
+      reportDate += timedelta(days=28)
+    if end_date >= start_date:
+      months[end_date.strftime('%Y%m')] = None
+    if report_type == 'sales':
+      fileNames = ['salesreport_' + m + '.zip' for m in months]
+    elif report_type == 'payouts':
+      fileNames = ['payout_' + m + '.zip' for m in months]
+    return fileNames
+  elif report_type == 'installs':
+    fileNames = []
+    startDateFloor = date(year=start_date.year, month=start_date.month, day=1)
+    endDateFloor = date(year=end_date.year, month=end_date.month, day=1)
+    bucket = storage_uri(_GOOGLE_REPORT_BUCKET_BASE + bucket_id)
+    for obj in bucket.list_bucket(prefix='stats/installs/installs'):  
+      m = match(r'^stats/installs/(installs_[^_]+_([\d]+)_overview.csv)$', obj.name)
+      if m:
+        # We expect YYYYMM format.
+        reportDateStr = m.group(2)
+        reportDateFloor = date(year=int(reportDateStr[:4]), month=int(reportDateStr[4:6]), day=1)
+        if (startDateFloor <= reportDateFloor <= endDateFloor) and (start_date <= end_date):
+          fileNames.append(m.group(1))
+    return fileNames
+  else:
+    raise NotImplementedError
+
+def _report_folder(report_type):
+  if report_type not in _GOOGLE_REPORT_TYPES:
+    raise ValueError('Unrecognized report type %s' % report_type)
+  elif report_type in ['payouts', 'sales']:
+    return report_type
+  elif report_type == 'installs':
+    return 'stats/installs'
+  else:
+    raise NotImplementedError

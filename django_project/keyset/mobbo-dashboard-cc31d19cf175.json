@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mobbo-dashboard",
+  "private_key_id": "cc31d19cf175df95c662cfe6056072fd0f4008b5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCIVV2/9WQbqkw5\nIc2hUrfBD88roCZnm+iQfb7TxBm1cWoLB9a2coCkZx2p/dLUdj1U6kxQHKIWvDXx\nX6vQRq1VL2OclIb9BB0VkLsXJz9wW1TPe/cNmW1OSRT0oP5y6DFVql8GNIapGx8g\nsu+25FJxuTtsP61AunLh7oRp9hihX6sYFv5XmRazXYWYrKHcq1krqTQ+UXvo0riU\nbpffquM+ZSJHREGgEOnOA13uCcP4sIQc/2shSyIwSO8Iw/+bmSCrpMSGra6Wkqn4\nwtYBkBargrjnfUB8h6UPiTnzkWo21nwVd6risglz6ho1buBuo5xVUou+0HjJ1I6o\ncji1DWl3AgMBAAECggEBAIOSXzeyizpnz8gTZ3AZdF1N9JIVrPqw7HEF6fRVfLov\nCjg7CGxrdNs06Nv1qlKBCg+5TozCFWv7l9OqkRYgH4fmhCvI672jCq6VTvm5VvAI\nNIFJEdR+DY9P2Hl+JhKfI32ZPruuVYc+NXxJNC89ipNWQJLnoTyms9h3aDMa3gpd\n6BUGj+o5ZWsfZk+Gh0uOYJjJOawYZXPTpDGZyJQHpEphcnRaPzWBLXx++gX05uUU\nozAZwiv3TehtDQSr7zCXzOgPNN1x8CheG4BA8BqKDuj95RTCJ/5CVtwIPkfPdgmT\n4woicIKibBmCx/zw5IP89p3ScESrTRN3BW8EvdapKgECgYEA6YbEABGGiKSl5I7j\nXmnkT1MdEo8yfu0lo5wJBK5MbiSPeu6XBiR5BIIgQoiYjcLBnfMpMg3dGT5vEeOu\niXavAgAvR6XsTai8YbnqB1VYPTvoCufSE9Zxum+33xGxTsGEFt0jhaFZ0fxuBLWk\n08lWoLDTK7/cmCNPuE/xe3E8NGcCgYEAlXQfW9mf/odphYTo1tX34j96P2NHEag6\nKd3q8Pm9ChuPVgxFqkot3rNCicsvnyXTaC8o2UVzoRG724TUO0piAJ8KYrpjreNa\nUGl5WSZhhGR6b8CxFK9/txTHmWBc2HV52TcC5Gi1Fsdne+MpTo12c6prPfe3pI6r\nl9Ozp3WGeHECgYA1NsZ3FYdIn+xFluHs48ho4xGe5w6kqbmH/Mh5TpaQCri/VJsJ\nhUomYtijEKlitFyWd5CNnWcil32L4AwnuunKVOxxMTgVwjubMVhI74O6AGqyAX13\nk8g6qbaGmGuE/MfyxdWQX+It3Y3ceN/ket7Io0Kbl47XBEToRR9L99O2RQKBgEpt\nStSV+wxpaQ5aEw4x/kFItVtt2E2dxmFlJ4QcCp1G/kmu0N6uFEvMX715V1zdHHvM\nyH3zDVNQHoqCiqKAN2/xw91Izy0ghLB45jqUV4nz89lFT6pqf6KwEXp7N6GAV07q\nC2GuF0ihwxI6HS8GWc/eNYvlmimz9xYkElq5t16xAoGBAJOiq2VLhpY2OJTMOPWh\nA7TeEAJ4W0AGYhYF3RtlwqL/qDrXKyp+h2lRVBAm1SH3vKkn9mfbI7ph7JvFCiLv\nnPT1hy7BSPXgTs/K3t9+XZfK76IROIGL6HpYufkAtLqmmVUxe3qKzNDOBOENYjiP\naWNZJwi5U9GjPawAHnMwzmrV\n-----END PRIVATE KEY-----\n",
+  "client_email": "test-account@mobbo-dashboard.iam.gserviceaccount.com",
+  "client_id": "118431651165911448213",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-account%40mobbo-dashboard.iam.gserviceaccount.com"
+}
